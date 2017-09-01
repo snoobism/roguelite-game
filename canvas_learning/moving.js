@@ -21,8 +21,11 @@ var firerate_timeout=0;
 drawing = new Image();
 drawing.src = "admiral.jpg"; 
 
-char_sprite = new Image();
-char_sprite.src = "char_spritesheet.png"; 
+char_sprite_still = new Image();
+char_sprite_still.src = "char_spritesheet_still.png"; 
+
+char_sprite_move = new Image();
+char_sprite_move.src = "char_spritesheet_moving.png";
 
 var room =[ //<--- a[w][x][y][z]
     [   //<--- w //left
@@ -812,11 +815,46 @@ function Caracter(x,y,v,w,h)
     var wall_collision_a=0;
     var wall_collision_s=0;
     var wall_collision_d=0;
-    
-    this.draw=function(){
-        c.beginPath();
-        c.drawImage(char_sprite, 0, 0, 133, 203, this.x, this.y, this.w, this.h)
-    }
+    var char_frame=0;
+    var char_frame_switch = 1;
+    var char_frame_2=0;
+    var char_frame_switch_2 = 1;
+    this.draw = function () {
+        if (keys['w'] == true || keys['s'] == true || keys['a'] == true || keys['d'] == true) {
+            c.beginPath();
+            c.drawImage(char_sprite_move, char_frame_2 * 133, 0, 133, 203, this.x, this.y, this.w, this.h);
+            if (char_frame_switch_2 == 1) {
+                char_frame_switch_2 = 0;
+                setTimeout(function () {
+                    if (char_frame_2 >= 8) {
+                        char_frame_2 = 0;
+                        char_frame_switch_2 = 1;
+                    } else {
+                        char_frame_2++;
+                        char_frame_switch_2 = 1;
+
+                    }
+                }, 71);
+            }
+        } else {
+            c.beginPath();
+            c.drawImage(char_sprite_still, char_frame * 133, 0, 133, 203, this.x, this.y, this.w, this.h);
+            if (char_frame_switch == 1) {
+                char_frame_switch = 0;
+                setTimeout(function () {
+                    if (char_frame >= 1) {
+                        char_frame = 0;
+                        char_frame_switch = 1;
+                    } else {
+                        char_frame++;
+                        char_frame_switch = 1;
+
+                    }
+                }, 300);
+            }
+        }
+
+}
     this.update=function(key_pressed){
         
        
