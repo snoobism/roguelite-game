@@ -27,6 +27,9 @@ char_sprite_still.src = "char_spritesheet_still.png";
 char_sprite_move = new Image();
 char_sprite_move.src = "char_spritesheet_moving.png";
 
+wall_sprite = new Image();
+wall_sprite.src = "wall_spritesheet.png"; 
+
 var room =[ //<--- a[w][x][y][z]
     [   //<--- w //left
             [   //<---x 
@@ -624,17 +627,41 @@ function Wall(x,y,w)
     this.x=x;
     this.y=y;
     this.w=w;
+    this.random=getRandomInt(0, 4);
     
     this.draw=function(){
-        c.beginPath();
-        c.rect(this.x,this.y,this.w,this.w);
-        c.fillStyle='blue';
-        c.fill();
-    }
+            
+            if(this.x==0 && this.y==0)
+                {
+                    c.beginPath();
+                    c.drawImage(wall_sprite, 5 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+                }
+            if(this.y==0 && (this.x>0 && this.x<t*12))
+                {
+                    c.beginPath();
+                    c.drawImage(wall_sprite, this.random * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+                }
+            if(this.x==t*12 && this.y==0)
+                    
+                {  
+                    c.beginPath();
+                    c.save();
+                    c.translate(this.x,this.y);
+                    c.scale(-1,1);
+                    c.drawImage(wall_sprite, 5 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+                    c.scale(-1,1);
+                    c.restore();
+                    
+                 
+                    
+                }
+    }   
+    
     this.remove= function(){
         var z=blockDoor.indexOf(this);
         blockDoor.splice(z,1);
     }
+    
     
 }
 var currentRoom=[];
@@ -653,7 +680,6 @@ function newRoom(w,x,y){
                     }
             }
     }
-    console.log(currentRoom);
     caracter.x=loc_car_x*t;
     caracter.y=loc_car_y*t;
     arma.x=caracter.x+caracter.r/2;
@@ -706,7 +732,7 @@ function Enemy(x,y,id)
              this.h=90;
              this.v=1;
              this.hp=5;
-             console.log(typeof(this))
+             
              
              this.draw = function()
              {
@@ -781,7 +807,7 @@ function Bullet(x,y,v,r,mx,my){
     }
     this.update = function () {
         
-        console.log(this.v);
+        
         if (this.x < canvas.width && this.x > 0 && this.y < canvas.height && this.y > 0) {
             this.x += adaos_x;
             this.y += adaos_y;
@@ -1024,12 +1050,12 @@ addEventListener('mouseup', function(event){
 
 
 
-console.log(wallArray.length);
+
 newRoom(0,gamestate.mapPosX,gamestate.mapPosY);
 function animation(){
     if(caracter.x<0)
         {
-            console.log(1);
+            
             gamestate.mapPosY--;
             loc_car_x=11;
             loc_car_y=5;
@@ -1115,7 +1141,7 @@ function animation(){
             }
             }
     }
-    console.log(gamestate.mapPosX,gamestate.mapPosY);
+    
     requestAnimationFrame(animation);
     
     
@@ -1198,7 +1224,7 @@ function animation(){
                         {
                             caracter.hp--;
                             timeout=1;
-                            console.log('a');
+                            
                             setTimeout(function(){timeout=0},caracter.invincibility);
                         }
                     
@@ -1212,4 +1238,4 @@ animation();
 
     
     
-console.log(t);
+
