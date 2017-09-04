@@ -7,7 +7,7 @@ var t=canvas.height/11;
 
 var c = canvas.getContext('2d');
 
-
+var z1=2,z2=2,z3=5,z4=5;
 var loc_car_x=6,loc_car_y=5;
 var blockDoor = [];
 var wallArray = [];
@@ -18,8 +18,17 @@ var firerate_timeout=0;
 
 
 
-drawing = new Image();
-drawing.src = "admiral.jpg"; 
+enemy1_sprite= new Image();
+enemy1_sprite.src = "enemy.png"; 
+
+weapon_sprite = new Image();
+weapon_sprite.src = "pistol.png"; 
+
+char_bullet = new Image();
+char_bullet.src = "char_bullet.png"; 
+
+door_sprite = new Image();
+door_sprite.src = "door_sprite.png"; 
 
 char_sprite_still = new Image();
 char_sprite_still.src = "char_spritesheet_still.png"; 
@@ -605,7 +614,7 @@ function intersection(x1,y1,w1,h1,x2,y2,w2,h2)
     w2=w2+x2;
     w1=w1+x1;
     
-    if(x2>x1 || x1>w2)
+    if(x2>w1 || x1>w2)
         {
             return false;
         }
@@ -628,34 +637,49 @@ function Wall(x,y,w)
     this.y=y;
     this.w=w;
     this.random=getRandomInt(0, 4);
+    this.random2=getRandomInt(7, 11);
+    this.random3=getRandomInt(13, 17);
+    this.random4=getRandomInt(19, 23);
     
-    this.draw=function(){
-            
-            if(this.x==0 && this.y==0)
-                {
-                    c.beginPath();
-                    c.drawImage(wall_sprite, 5 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
-                }
-            if(this.y==0 && (this.x>0 && this.x<t*12))
-                {
-                    c.beginPath();
-                    c.drawImage(wall_sprite, this.random * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
-                }
-            if(this.x==t*12 && this.y==0)
-                    
-                {  
-                    c.beginPath();
-                    c.save();
-                    c.translate(this.x,this.y);
-                    c.scale(-1,1);
-                    c.drawImage(wall_sprite, 5 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
-                    c.scale(-1,1);
-                    c.restore();
-                    
-                 
-                    
-                }
-    }   
+    this.draw = function () {
+
+        if (this.x == 0 && this.y == 0) {
+            c.beginPath();
+            c.drawImage(wall_sprite, 5 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+        }
+        if (this.y == 0 && (this.x > 0 && this.x < t * 12)) {
+            c.beginPath();
+            c.drawImage(wall_sprite, this.random * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+        }
+        if (this.x == t * 12 && this.y == 0) {
+            c.beginPath();
+            c.drawImage(wall_sprite, 6 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+        }
+        if(this.x == t*12 && this.y>0 && this.y<10*t)
+            {
+                c.beginPath();
+            c.drawImage(wall_sprite, this.random2 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+            }
+        if (this.x == t * 12 && this.y == 10*t) {
+            c.beginPath();
+            c.drawImage(wall_sprite, 12 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+        }
+        if(this.y == t*10 && this.x>0 && this.x<12*t)
+            {
+                c.beginPath();
+                c.drawImage(wall_sprite, this.random3 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+            }
+        if(this.y== t*10 && this.x==0)
+            {
+                c.beginPath();
+                c.drawImage(wall_sprite, 18 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+            }
+        if(this.x==0&&this.y>0&&this.y<10*t)
+            {
+                c.beginPath();
+                c.drawImage(wall_sprite, this.random4 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+            }
+    }
     
     this.remove= function(){
         var z=blockDoor.indexOf(this);
@@ -666,7 +690,7 @@ function Wall(x,y,w)
 }
 var currentRoom=[];
 function newRoom(w,x,y){
-    
+    z1=5,z2=5,z3=11,z4=11;
     currentRoom=gamestate.mapRoomArray[x][y];
      wallArray=[];
     for(var i=0;i<=currentRoom.length-1;i++)
@@ -710,16 +734,20 @@ function bDoor(x,y,w)
     this.y=y;
     this.w=w;
     
-    this.draw=function(){
+    
+    
+    this.draw=function(i){
+        
+        var door_frame_switch=1;
+        var door_frame=i;
+        
         c.beginPath();
-        c.rect(this.x,this.y,this.w,this.w);
-        c.fillStyle='pink';
-        c.fill();
-    }
+        c.drawImage(door_sprite, door_frame * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
+       
   
     
 }
-
+}
 
 function Enemy(x,y,id)
 {
@@ -728,18 +756,31 @@ function Enemy(x,y,id)
      switch (id)
      {
          case 1:
-             this.w=150;
-             this.h=90;
-             this.v=1;
+             this.w=t;
+             this.h=t;
+             this.v=2;
              this.hp=5;
-             
+             this.sprite=enemy1_sprite;
+             var sprite_frame=0;
+             var sprite_frame_switch=1;
              
              this.draw = function()
              {
                  c.beginPath();
-                 c.rect(this.x,this.y,this.w,this.h);
-                 c.fillStyle='white';
-                 c.fill();
+                c.drawImage(this.sprite, sprite_frame * 203, 0, 203, 196, this.x, this.y, this.w, this.h);
+                if (sprite_frame_switch == 1) {
+                    sprite_frame_switch = 0;
+                    setTimeout(function () {
+                        if (sprite_frame >= 1) {
+                            sprite_frame = 0;
+                            sprite_frame_switch = 1;
+                        } else {
+                            sprite_frame++;
+                            sprite_frame_switch = 1;
+
+                        }
+                    }, 200);
+                }
              }
              
              this.update = function()
@@ -801,9 +842,7 @@ function Bullet(x,y,v,r,mx,my){
     this.y += adaos_y;
     this.draw = function(){
         c.beginPath();
-        c.arc(this.x,this.y,this.r,0,Math.PI*2,0);
-        c.fillStyle='lime';
-        c.fill();
+        c.drawImage(char_bullet, 0, 0, 224, 224, this.x, this.y, this.r, this.r);
     }
     this.update = function () {
         
@@ -952,9 +991,9 @@ function Arma (x,y,v,w,h)
         if(mouse.x<this.x)
             {
                 c.scale(1, -1);
-                c.drawImage(drawing,0,0,w,h);
+                c.drawImage(weapon_sprite,0,0,w,h);
                 c.scale(1, -1);
-            }else {c.drawImage(drawing,0,0,w,h);}
+            }else {c.drawImage(weapon_sprite,0,0,w,h);}
         
         c.restore();
     }
@@ -987,8 +1026,8 @@ function Arma (x,y,v,w,h)
 }
 
 var mouse = new Mouse ();
-var caracter = new Caracter (1*t,1*t, 10.39/100*t, (69/100*t)*0.65517,(69/100*t));
-var arma = new Arma (caracter.w/2, caracter.h/2, 10.39/100*t, 69/100*t,13.85/100*t);
+var caracter = new Caracter (1*t,1*t, 7/100*t, (69/100*t)*0.65517,(69/100*t));
+var arma = new Arma (caracter.w/2, caracter.h/2, 10.39/100*t, 35*1.8/100*t,35/100*t);
 
 
 
@@ -1051,6 +1090,7 @@ addEventListener('mouseup', function(event){
 
 
 
+var ok1=0,ok2=0,ok3=0,ok4=0;
 newRoom(0,gamestate.mapPosX,gamestate.mapPosY);
 function animation(){
     if(caracter.x<0)
@@ -1124,20 +1164,52 @@ function animation(){
                 
             
         if(currentRoom[0][6] != 'w')
-            {
-                blockDoor[0].draw();
+            {   
+                
+                     blockDoor[0].draw(z1);
+                
+               
+                if(ok1==0 && z1>0){   
+                    ok1=1;
+                   setTimeout(function(){
+                    z1--;
+                    ok1=0;
+                    },50);
+                }
             }
         if(currentRoom[10][6] != 'w')
-            {
-                blockDoor[1].draw();
+            {   
+                blockDoor[1].draw(z2);
+                if(ok2==0 && z2>0){   
+                    ok2=1;
+                   setTimeout(function(){
+                    z2--;
+                    ok2=0;
+                    },50);
+                }
             }
         if(currentRoom[5][0] != 'w')
-            {
-                blockDoor[2].draw();
+            {   
+                blockDoor[2].draw(z3);
+                if(ok3==0 && z3>6){   
+                    ok3=1;
+                   setTimeout(function(){
+                    z3--;
+                    ok3=0;
+                    },50);
+                }
             }
         if(currentRoom[5][12] != 'w')
-            {
-                blockDoor[3].draw();
+            {   
+                blockDoor[3].draw(z4);
+                if(ok4==0 && z4>6){  
+                    ok4=1;
+                   setTimeout(function(){
+                    z4--;
+                    ok4=0;
+                    },50);
+                }
+                
             }
             }
     }
@@ -1167,7 +1239,7 @@ function animation(){
     }
     if (keys['clic'] == true) {
         if (firerate_timeout == 0) {
-            bulletArray[k] = new Bullet(caracter.x+caracter.w/2, caracter.y+caracter.h/2, 13.85/100*t, 13.85/100*t, mouse.x, mouse.y);
+            bulletArray[k] = new Bullet(caracter.x+caracter.w/2, caracter.y+caracter.h/2, 13.85/100*t, 25/100*t, mouse.x, mouse.y);
             k++;
             firerate_timeout = 1;
             setTimeout(function () {
@@ -1224,7 +1296,7 @@ function animation(){
                         {
                             caracter.hp--;
                             timeout=1;
-                            
+                            console.log('a');
                             setTimeout(function(){timeout=0},caracter.invincibility);
                         }
                     
