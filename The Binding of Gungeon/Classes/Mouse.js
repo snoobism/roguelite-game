@@ -1,4 +1,4 @@
 function Mouse(){
-    this.x=canvas.width/2;
-    this.y=canvas.height/2;
+    this.x=previousCanvasWidth/2;
+    this.y=previousCanvasHeight/2;
 }

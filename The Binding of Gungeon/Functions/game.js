@@ -1,28 +1,54 @@
 var canvas = document.querySelector('canvas');
+var c = canvas.getContext('2d');
+
+var RESIZE_CANVAS = 0;
+
+var previousCanvasWidth;
+var previousCanvasHeight;
+
+var initInnerWidth;
+var initInnerHeight;
 
 var t;
 
+if(window.innerHeight > window.innerWidth)
+    {
+        canvas.width = window.innerWidth;
+        canvas.height = 11/13 * canvas.width;
+        previousCanvasWidth = canvas.width;
+        previousCanvasHeight = canvas.height;
+        t = canvas.width / 13;
+    }
+    else
+    {
+        canvas.height = window.innerHeight;
+        canvas.width = 13/11 * canvas.height;
+        previousCanvasWidth = canvas.width;
+        previousCanvasHeight = canvas.height;
+        t = canvas.height / 11;
+    }
+
 function setCanvasSize(){
-	
 	if(window.innerHeight > window.innerWidth)
 	{
-		canvas.width = window.innerWidth;
-		canvas.height = 11/13 * canvas.width;
-		t=canvas.width/13;	
-	}
+
+        canvas.width = window.innerWidth;
+        canvas.height = 11/13 * canvas.width;
+        RESIZE_CANVAS = 1;
+    }
 	else
 	{
-		canvas.height = window.innerHeight;
-		canvas.width = 13/11 * canvas.height;
-		t=canvas.height/11;	
+
+        canvas.height = window.innerHeight;
+        canvas.width = 13/11 * canvas.height;
+        RESIZE_CANVAS = 1;          
 	}
 	
 }
 
 setCanvasSize(); // set canvas for the first time
-window.addEventListener('resize', function(){setCanvasSize()}); //set dimensions once again on resize
+window.addEventListener("resize", function(){setCanvasSize()}); //set dimensions once again on resize
 
-var c = canvas.getContext('2d');
 
 var z1=2, z2=2, z3=5, z4=5; // variables used for door animations
 var loc_car_x = 6, loc_car_y = 5;
@@ -91,14 +117,17 @@ addEventListener("keyup", function(event) {
 addEventListener('mousemove', function(event){
 	if(innerWidth > innerHeight)
 	{
-		mouse.x=event.clientX-(window.innerWidth-canvas.width)/2;
+		mouse.x=event.clientX-(innerWidth-canvas.width)/2;
 		mouse.y=event.clientY;
 	}
 	else
 	{
 		mouse.x=event.clientX;
-		mouse.y=event.clientY-(window.innerHeight-canvas.height)/2;
+		mouse.y=event.clientY-(innerHeight-canvas.height)/2;
 	}
+    mouse.x = mouse.x * (previousCanvasWidth / canvas.width);    //our size values are set when starting the game and do not change when resizing the window 
+    mouse.y = mouse.y * (previousCanvasWidth / canvas.width);    //since our cursor location is based on the window size, we will have to scale it up on resize
+     
     weapon.update();
 })
 

@@ -35,7 +35,7 @@ function Bullet(x,y,v,r,mx,my){
     this.update = function () {
         
         
-        if (this.x < canvas.width && this.x > 0 && this.y < canvas.height && this.y > 0) {
+        if (this.x < previousCanvasWidth && this.x > 0 && this.y < previousCanvasHeight && this.y > 0) {
             this.x += adaos_x;
             this.y += adaos_y;
             

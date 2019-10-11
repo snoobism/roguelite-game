@@ -6,7 +6,7 @@ function Weapon (x,y,v,w,h)
     this.w=w;
     this.h=h;
     this.angle=Math.atan(Math.abs(character.y+character.h-mouse.y)/Math.abs(character.x+character.w-mouse.x));
-    this.angleRad=this.angle*(Math.PI/180);
+    this.angleRad=this.angle * (Math.PI / 180);
     this.draw=function(){
         c.save();
         c.beginPath();

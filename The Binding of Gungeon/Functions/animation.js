@@ -1,4 +1,10 @@
 function animation(){
+    if(RESIZE_CANVAS == 1)
+    {
+        c.scale(canvas.width / previousCanvasWidth, canvas.width / previousCanvasWidth);
+        RESIZE_CANVAS = 0;
+    }
+
     if(character.x<0)
         {
             
@@ -15,23 +21,24 @@ function animation(){
             loc_car_y=9;
             newRoom(0,gamestate.mapPosX,gamestate.mapPosY);
         }
-    if(character.x>canvas.width)
+    if(character.x > previousCanvasWidth)
         {
             gamestate.mapPosY++;
             loc_car_x=1;
             loc_car_y=5;
             newRoom(0,gamestate.mapPosX,gamestate.mapPosY);
         }
-    if(character.y>canvas.height)
+    if(character.y > previousCanvasHeight)
         {
             gamestate.mapPosX++;
             loc_car_x=6;
             loc_car_y=1;
             newRoom(0,gamestate.mapPosX,gamestate.mapPosY);
         }
-    c.clearRect(0,0,innerWidth,innerHeight);  //clear screen
+    c.clearRect(0, 0, previousCanvasWidth, previousCanvasHeight);  //clear screen
     if(character.hp>0)
         {
+
             character.draw();    //draw character
             weapon.draw();    //draw weapon   
         }
@@ -119,7 +126,6 @@ function animation(){
             }
             }
     }
-    
     requestAnimationFrame(animation);
     
     
