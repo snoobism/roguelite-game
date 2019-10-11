@@ -5,4 +5,6 @@ function Room(x, y, room){
 
 	this.consumables = [];
 	this.items = [];
+	this.bossArray = [];
+	this.rockArray = [];
 }

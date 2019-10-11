@@ -1,69 +1,42 @@
 var canvas = document.querySelector('canvas');
 
+var grid = [];
 
+var path = [];
 
 // Now this line will be the same size on the page
 // but will look sharper on high-DPI devices!
 var c = canvas.getContext('2d');
-var RESIZE_CANVAS = 0;
 
-var previousCanvasWidth;
-var previousCanvasHeight;
+var RESIZE_CANVAS = 0;
+var t = 64;
+
+var previousCanvasWidth = 13 * t;
+var previousCanvasHeight = 11 * t;
+
+canvas.width = 13*t;
+canvas.height = 11 * t;
 
 var initInnerWidth;
 var initInnerHeight;
-
-var t;
-
-if(window.innerHeight > window.innerWidth)
-    {
-        canvas.width = window.innerWidth;
-        canvas.height = 11/13 * canvas.width;
-        previousCanvasWidth = canvas.width;
-        previousCanvasHeight = canvas.height;
-        t = canvas.width / 13;
-
-    }
-    else
-    {
-        canvas.height = window.innerHeight;
-        canvas.width = 13/11 * canvas.height;
-        previousCanvasWidth = canvas.width;
-        previousCanvasHeight = canvas.height;
-        t = canvas.height / 11;
-
-    }
 
 function setCanvasSize(){
     if(window.innerHeight > window.innerWidth)
     {
 
-        canvas.width = window.innerWidth;
-        canvas.height = 11/13 * canvas.width;
-        document.getElementById("canvas").style.width = canvas.width + "px";
-        document.getElementById("canvas").style.height = canvas.height + "px";
+
+
         RESIZE_CANVAS = 1;
     }
     else
     {
 
-        canvas.height = window.innerHeight;
-        canvas.width = 13/11 * canvas.height;
-        document.getElementById("canvas").style.width = canvas.width + "px";
-        document.getElementById("canvas").style.height = canvas.height + "px";
+
         RESIZE_CANVAS = 1;          
     }
     
 }
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
 
 var itemArray = [];
 
@@ -405,4 +378,82 @@ function gameState(floor){
         ]
         
     ];
+
+    this.bossRooms_down = [
+        [
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],  //second
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', 'b:1', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', 'c', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', 'w', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', 'w', 'w']
+        ]
+
+    ];
+    this.bossRooms_up = [
+        [
+                ['w', 'w', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', 'w', 'w'],  //second
+                ['w', ' ', ' ', ' ', ' ', ' ', 'c', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', 'r', 'r', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', 'b:1', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+        ]
+
+    ];
+    this.bossRooms_left = [
+        [
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],  //second
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', 'r', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', 'r', 'r', 'w'],
+                [' ', ' ', ' ', ' ', ' ', ' ', 'b:1', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', 'c', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+        ]
+
+    ];
+    this.bossRooms_right = [
+        [
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],  //second
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', 'b:1', ' ', ' ', 'r', ' ', 'c', ' '],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', 'w'],
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+        ]
+        
+    ];
+    this.test_room = [
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],  //second
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ',  1 , ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', 'w'],
+                ['w', ' ', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', 'w'],
+                ['w', ' ', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', 'c', ' '],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'r', ' ', 'w'],
+                ['w', ' ', 'r', 'r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+    ]
 }

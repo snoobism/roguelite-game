@@ -46,6 +46,10 @@ function newRoom(w,x,y){
                         gamestate.mapRoomArray[x][y].items.push(new Item(j * t, i * t, x, y, 1));
                         gamestate.mapRoomArray[x][y].currentRoom[i][j] = ' ';
                     }
+                if(currentRoom[i][j] == "r")
+                    {
+                        gamestate.mapRoomArray[x][y].rockArray.push(new Rock(j * t, i * t, t, t));
+                    }   
                 if(currentRoom[i][j].length > 1)
                 {
                     if(currentRoom[i][j].substring(0, currentRoom[i][j].indexOf(":")) == 'con')
@@ -55,12 +59,19 @@ function newRoom(w,x,y){
                         gamestate.mapRoomArray[x][y].consumables.push(new Consumable(j * t, i * t, parseInt(consumableId)));
                         gamestate.mapRoomArray[x][y].currentRoom[i][j] = ' ';
                     }   
+                    if(currentRoom[i][j].substring(0, currentRoom[i][j].indexOf(":")) == 'b')
+                    {
+
+                        var consumableId = currentRoom[i][j].substring(currentRoom[i][j].indexOf(":") + 1, currentRoom[i][j].length)
+                        gamestate.mapRoomArray[x][y].bossArray.push(new Boss(j * t, i * t, parseInt(consumableId)));
+                        gamestate.mapRoomArray[x][y].currentRoom[i][j] = ' ';
+                    }   
                 }
             }
     }
 
     createLockedDoors();
-
+    checkEmptyRoom();
     bulletArray = []; // delete all bullets
     updateMiniMap(gamestate.mapPosX, gamestate.mapPosY);
 

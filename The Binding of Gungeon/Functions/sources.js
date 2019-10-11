@@ -20,7 +20,7 @@ char_sprite_still = new Image();
 char_sprite_still.src = "img/char_spritesheet_still.png"; 
 
 char_sprite_move = new Image();
-char_sprite_move.src = "img/big_boi3.png";
+char_sprite_move.src = "img/char_spritesheet_moving.png";
 
 wall_sprite = new Image();
 wall_sprite.src = "img/wall_spritesheet.png"; 
@@ -39,3 +39,6 @@ armour.src = "img/armour.png";
 
 bullet_armour = new Image();
 bullet_armour.src = "img/bullet_armour.png";
+
+rock_sprite = new Image();
+rock_sprite.src = "img/rock.png"; 

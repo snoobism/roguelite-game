@@ -6,9 +6,11 @@ function screenResizeCheck(){
     previousCanvasWidth/Height - initial canvas size
     */
 
+
     if(RESIZE_CANVAS == 1)
     {
-        c.scale(canvas.width / previousCanvasWidth, canvas.width / previousCanvasWidth);
+        document.getElementById("canvas").style.width = Math.ceil(window.innerHeight * 13/11) + "px";
+        document.getElementById("canvas").style.height = window.innerHeight + "px";
         RESIZE_CANVAS = 0;
     }
 }
@@ -50,84 +52,6 @@ function exitRoomCheck(){
         }
 }
 
-function drawCharacterBullets(){
-
-    /*
-    bulletArray[] - array to store Character's Bullet objects
-    */
-
-    for(var i = 0; i <= bulletArray.length - 1; i++)
-    {
-        if(bulletArray[i] != undefined)
-        {
-            bulletArray[i].draw();
-        }
-    }
-}
-
-function drawWalls(){
-
-    /*
-    wallArray[] - array to store the Wall objects
-    */
-
-    for (var i=0;i<=wallArray.length-1;i++)
-    {
-        wallArray[i].draw();
-    }
-}
-
-function drawCharacter(){
-    if(character.currentHp>0)
-    {
-
-        character.draw(); 
-        if(slotOne.empty == 0)
-        {
-            slotOne.draw();    
-        }
-        if(slotTwo.empty == 0)
-        {
-            slotTwo.draw();
-        }
-    }
-}
-
-function drawItems(){
-    for(var i = 0; i < gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items.length; i++)
-    {
-            if(gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items[i] != undefined)
-            {
-                gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items[i].draw();
-            }
-    }
-}
-
-function drawConsumables(){
-    for(var i = 0; i < gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables.length; i++)
-    {
-            if(gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables[i] != undefined)
-            {
-                gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables[i].draw();
-            }
-    }
-}
-
-function drawEnemies(){
-
-    /*
-    enemyArray[] - array to store Enemy objects
-    */
-
-    for(var i = 0;i <= enemyArray.length - 1; i++) 
-    {
-        if(enemyArray[i] != undefined)
-        {
-            
-            enemyArray[i].draw();
-        }
-    }
-}
 
 function createLockedDoors(){
 
@@ -135,193 +59,14 @@ function createLockedDoors(){
     enemyArray[] - array to store Enemy objects
     blockDoor[] - array to store LockedDoor objects
     */
+    var currentRoom = gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY];
 
-    if(enemyArray.length != 0)
+    if(enemyArray.length != 0 || currentRoom.bossArray.length != 0)
     {
         blockDoor[0] = new LockedDoor(6 * t, 0 * t, t);
         blockDoor[1] = new LockedDoor(6 *t , 10 * t, t);
         blockDoor[2] = new LockedDoor(0 * t, 5 * t, t);
         blockDoor[3] = new LockedDoor(12 * t, 5 * t, t);
-    }
-}
-
-function drawLockedDoors(){
-    
-    /*
-    enemyArray[] - array to store Enemy objects
-    
-    */
-    
-	if (enemyArray.length != 0) 
-	{
-        if(currentRoom !== 'undefined')
-            {        
-	        if(currentRoom[0][6] != 'w')
-	            {   	                
-                    blockDoor[0].draw(z1);	               
-	                if(ok1==0 && z1>0){   
-                        ok1=1;
-                        setTimeout(function(){
-    	                    z1--;
-    	                    ok1=0;
-	                    },50);
-	                }
-	            }
-	        if(currentRoom[10][6] != 'w')
-	            {   
-	                blockDoor[1].draw(z2);
-	                if(ok2==0 && z2>0){   
-	                    ok2=1;
-                        setTimeout(function(){
-    	                    z2--;
-    	                    ok2=0;
-	                    },50);
-	                }
-	            }
-	        if(currentRoom[5][0] != 'w')
-	            {   
-	                blockDoor[2].draw(z3);
-	                if(ok3==0 && z3>6){   
-	                    ok3=1;
-	                    setTimeout(function(){
-    	                    z3--;
-    	                    ok3=0;
-	                    },50);
-	                }
-	            }
-	        if(currentRoom[5][12] != 'w')
-	            {   
-	                blockDoor[3].draw(z4);
-	                if(ok4==0 && z4>6){  
-	                    ok4=1;
-	                    setTimeout(function(){
-    	                    z4--;
-    	                    ok4=0;
-	                    },50);
-	                }
-	                
-	            }
-            }
-    }
-}
-
-function drawReloadBar(){
-    reloadBarOne.draw();
-    if(slotOne.reloadTimeout == 1)
-    {
-        reloadBarOne.progress += 1;
-    }
-    reloadBarTwo.draw();
-    if(slotTwo.reloadTimeout == 1)
-    {
-        reloadBarTwo.progress += 1;
-    }
-}
-
-function checkKeysPressed(){
-	
-	if (keys['w'] == true) {
-        
-        character.update('w');
-        slotOne.update();
-        slotTwo.update();
-    }
-
-    if (keys['a'] == true) {
-        
-        character.update('a');
-        slotOne.update();
-        slotTwo.update();
-    }
-
-    if (keys['s'] == true) {
-        
-        character.update('s');
-        slotOne.update();
-        slotTwo.update();
-    }
-
-    if (keys['d'] == true) {
-        
-        character.update('d');
-        slotOne.update();
-        slotTwo.update();
-    }
-
-    if (keys['clic1'] == true) {
-        if (slotOne.useTimeout == 0)
-        {
-            slotOne.active();
-            slotOne.useTimeout = 1;
-            setTimeout(function () {
-                slotOne.useTimeout = 0;
-            }, slotOne.firerate);
-        }
-    }
-    if (keys['clic2'] == true) {
-        if (slotTwo.useTimeout == 0)
-        {   
-            slotTwo.active();
-            slotTwo.useTimeout = 1;
-            setTimeout(function () {
-                slotTwo.useTimeout = 0;
-            }, slotTwo.firerate);
-        }
-    }
-
-    if(keys['r'] == true && slotOne.reloadTimeout == 0 && slotOne.clipAmmo != slotOne.clipSize)
-    {
-        slotOne.reloadTimeout = 1;
-        setTimeout(function(){
-            slotOne.clipAmmo = slotOne.clipSize;
-            slotOne.reloadTimeout = 0;
-            reloadBarOne.progress = 0;
-        }, slotOne.reloadTime)
-    }
-    if(keys['r'] == true && slotTwo.reloadTimeout == 0 && slotTwo.clipAmmo != slotTwo.clipSize)
-    {
-        slotTwo.reloadTimeout = 1;
-        setTimeout(function(){
-            slotTwo.clipAmmo = slotTwo.clipSize;
-            slotTwo.reloadTimeout = 0;
-            reloadBarTwo.progress = 0;
-        }, slotTwo.reloadTime)
-    }
-}
-
-function updateBullets(){
-	for(var i = 0; i <= bulletArray.length - 1; i++)  //make bullet move
-        {
-            if(bulletArray[i] != undefined)
-            {
-                bulletArray[i].update();
-            }
-        }
-}
-
-function updateEnemies(){
-    for(var i = 0; i <= enemyArray.length - 1; i++)  //make enemy move
-        {
-            if(enemyArray[i] != undefined)
-            {
-                
-                enemyArray[i].update();
-            }
-        }
-}
-
-function checkBulletImpact(){
-    for (var i = 0; i <= bulletArray.length - 1; i++) { //check impact
-        for (var j = 0; j <= enemyArray.length - 1; j++) {
-            if (bulletArray[i] != undefined) {
-                if (intersection(bulletArray[i].x, bulletArray[i].y, bulletArray[i].r, bulletArray[i].r, enemyArray[j].x, enemyArray[j].y, enemyArray[j].w, enemyArray[j].h)) {
-
-                    enemyArray[j].hp = enemyArray[j].hp - bulletArray[i].damage;
-                    bulletArray[i].remove();
-
-                }
-            }
-        }
     }
 }
 
@@ -337,6 +82,19 @@ function checkEnemyHp(){
         }
 }
 
+function checkBossHp(){
+    var currentRoom = gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY];
+    for(var i = 0; i < currentRoom.bossArray.length;i ++) //check enemy hp
+        {
+            if(currentRoom.bossArray[i].hp <= 0)
+            {
+                currentRoom.bossArray[i].remove();
+                checkEmptyRoom();
+
+            }
+        }
+}
+
 function checkCharacterHp(){
     if(character.currentHp <= 0)  //check character hp
         {
@@ -344,55 +102,74 @@ function checkCharacterHp(){
         }
 }
 
+function characterTakeDamage(enemy){
+    if(timeout == 0)
+        {
+            if(character.currentBulletArmour > 0)
+            {
+                character.currentBulletArmour--;    
+                if(slotOne.empty == 0)
+                {
+                    slotOne.clipSize--;
+                    if(slotOne.clipAmmo > slotOne.clipSize)
+                    {
+                        slotOne.clipAmmo--;
+                    }
+                }
+                if(slotTwo.empty == 0)
+                {
+                    slotTwo.clipSize--;
+                    if(slotTwo.clipAmmo > slotTwo.clipSize)
+                    {
+                        slotTwo.clipAmmo--; 
+                    }
+                }
+            }
+            else
+            if(character.currentArmour > 0)
+            {
+                character.currentArmour--;
+            }
+            else
+            {
+                character.currentHp--;
+            }
+            updateCharacterHpBar();
+            timeout = 1;
+            setTimeout(function(){
+                timeout = 0;
+            }, character.invincibility);
+        }
+}
+
 function checkCharacterImpact(){
+    var currentBossArray = gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].bossArray;
+
 	for(var j = 0; j < enemyArray.length; j++)
         {
-            if(intersection(character.x, character.y, character.w, character.h, enemyArray[j].x, enemyArray[j].y, enemyArray[j].w, enemyArray[j].h))
-                {
-                    if(timeout == 0)
-                        {
-                            if(character.currentBulletArmour > 0)
-                            {
-                                character.currentBulletArmour--;    
-                                if(slotOne.empty == 0)
-                                {
-                                    slotOne.clipSize--;
-                                    if(slotOne.clipAmmo > slotOne.clipSize)
-                                    {
-                                        slotOne.clipAmmo--;
-                                    }
-                                }
-                                if(slotTwo.empty == 0)
-                                {
-                                    slotTwo.clipSize--;
-                                    if(slotTwo.clipAmmo > slotTwo.clipSize)
-                                    {
-                                        slotTwo.clipAmmo--; 
-                                    }
-                                }
-                            }
-                            else
-                            if(character.currentArmour > 0)
-                            {
-                                character.currentArmour--;
-                            }
-                            else
-                            {
-                                character.currentHp--;
-                            }
-                            updateCharacterHpBar();
-                            timeout = 1;
-                            setTimeout(function(){
-                            	timeout = 0;
-                            }, character.invincibility);
-                        }
-                    
-                }
+            for(var k = 0; k < enemyArray[j].bodyParts.length; k++)
+            {
+                if(intersection(character.x, character.y, character.w, character.h, enemyArray[j].bodyParts[k].x, enemyArray[j].bodyParts[k].y, enemyArray[j].bodyParts[k].w, enemyArray[j].bodyParts[k].h))
+                    {
+                        characterTakeDamage(enemyArray[j]);
+                    }
+            }
+        }
+
+    for(var j = 0; j < currentBossArray.length; j++)
+        {
+            for(var k = 0; k < currentBossArray[j].bodyParts.length; k++)
+            {
+                if(intersection(character.x, character.y, character.w, character.h, currentBossArray[j].bodyParts[k].x, currentBossArray[j].bodyParts[k].y, currentBossArray[j].bodyParts[k].w, currentBossArray[j].bodyParts[k].h))
+                    {
+                        characterTakeDamage(currentBossArray[j]);
+                    }
+            }
         }
 }
 
 function checkEmptyRoom(){
-    if(enemyArray.length == 0)
+    if(enemyArray.length == 0 && gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].bossArray.length == 0)
     {
         gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY] = 1;
         blockDoor = [];
@@ -444,63 +221,3 @@ function checkConsumableIntersection(){
     }
 }
 
-function updateCharacterHpBar(){
-    var i = document.getElementById("health").childElementCount;
-    while(i != character.maxHp + character.currentArmour + character.currentBulletArmour)
-    {
-        if(i < character.maxHp + character.currentArmour + character.currentBulletArmour){
-            var heart = document.createElement("div");
-            heart.id = "heart_cont" + i;
-            heart.style.position = "relative";
-            heart.style.display = "inline-block";
-            heart.style.width = 5 + "vh";
-            heart.style.height = 5 + "vh";
-            heart.style.marginLeft = "1vh";
-            heart.style.marginTop = "1vh";
-            if(i < character.maxHp)
-            {
-                heart.style.backgroundImage = "url(img/heart_empty.png)"
-            }
-            else if(i < character.maxHp + character.currentArmour)
-            {
-                heart.style.backgroundImage = "url(img/armour.png)";
-            }
-            else
-            {
-                heart.style.backgroundImage = "url(img/bullet_armour.png)";
-            }
-            heart.style.backgroundSize = "contain";
-            heart.style.backgroundRepeat = "no-repeat";
-            heart.style.backgroundPosition = "center";
-            heart.style.zIndex = 1;
-            document.getElementById("health").appendChild(heart);
-            i++;
-        }
-        else if(i > character.maxHp + character.currentArmour + character.currentBulletArmour){
-            document.getElementById("heart_cont"+(i -1)).remove();
-            i--;
-        }
-    }
-
-    for(var i = 0; i < character.maxHp; i++)
-    {
-        if(i < character.currentHp){
-
-            document.getElementById("heart_cont" + i).style.backgroundImage = "url(img/heart_full.png)";
-        
-        }
-        else{
-
-            document.getElementById("heart_cont" + i).style.backgroundImage = "url(img/heart_empty.png)";
-        }
-
-    }
-    for(var j = i; j < character.maxHp + character.currentArmour; j++)
-    {
-        document.getElementById("heart_cont" + j).style.backgroundImage = "url(img/armour.png)";
-    }
-    for(var k = j; k < character.maxHp + character.currentArmour + character.currentBulletArmour; k++)
-    {
-        document.getElementById("heart_cont" + k).style.backgroundImage = "url(img/bullet_armour.png)";        
-    }
-}

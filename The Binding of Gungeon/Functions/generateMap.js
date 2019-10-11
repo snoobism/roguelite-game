@@ -41,23 +41,32 @@ function generateMap()
 
 
     var itemRoomPlaced = 0;
+    var bossRoomPlaced = 0;
 
-    while(itemRoomPlaced == 0)
+    while(itemRoomPlaced == 0 || bossRoomPlaced == 0)
     {
         for(var i=2;i<=gamestate.mapArray.length-3;i++)
         {
             for(var j=2;j<=gamestate.mapArray[i].length-3;j++)    
             {
-                if(gamestate.mapArray[i][j] == 1 && Math.random() < 0.5)
+                if(gamestate.mapArray[i][j] == 1 && Math.random() < 0.5 && itemRoomPlaced == 0)
                 {
-                    if(checkValidSpecialRoom(i,j) == true)
+                    if(checkValidSpecialRoom(i,j, "itemRoom") == true)
                     {
                         itemRoomPlaced = 1;
                         break;
                     }
                 }
+                if(gamestate.mapArray[i][j] == 1 && Math.random() < 0.5 && bossRoomPlaced == 0)
+                {
+                    if(checkValidSpecialRoom(i,j, "bossRoom") == true)
+                    {
+                        bossRoomPlaced = 1;
+                        break;
+                    }
+                }
             }
-            if(itemRoomPlaced == 1)
+            if(itemRoomPlaced == 1 && bossRoomPlaced == 1)
             {
                 break;
             }

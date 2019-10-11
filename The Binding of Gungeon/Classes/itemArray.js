@@ -62,13 +62,12 @@ itemArray[0] = {
         {
         	if(mouse.x > this.x)
         	{
-            	bulletArray[k] = new Bullet(this.x + (this.width)* Math.cos(this.angle), this.y + (this.height + this.bulletSize) * Math.sin(this.angle), this.shotSpeed, this.bulletSize, mouse.x, mouse.y, this.bulletImage, this.bulletDamage);
+            	bulletArray.push(new Bullet(this.x + (this.width)* Math.cos(this.angle), this.y + (this.height + this.bulletSize) * Math.sin(this.angle), this.shotSpeed, this.bulletSize, mouse.x, mouse.y, this.bulletImage, this.bulletDamage));
         	}
         	else
         	{
-            	bulletArray[k] = new Bullet(this.x + (this.width + this.bulletSize)* Math.cos(this.angle), this.y + (this.height + this.bulletSize) * Math.sin(this.angle), this.shotSpeed, this.bulletSize, mouse.x, mouse.y, this.bulletImage, this.bulletDamage);
+            	bulletArray.push(new Bullet(this.x + (this.width + this.bulletSize)* Math.cos(this.angle), this.y + (this.height + this.bulletSize) * Math.sin(this.angle), this.shotSpeed, this.bulletSize, mouse.x, mouse.y, this.bulletImage, this.bulletDamage));
         	}
-            k++;
             this.clipAmmo--;            
         }
 

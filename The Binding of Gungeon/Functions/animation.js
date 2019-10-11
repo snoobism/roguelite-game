@@ -31,6 +31,7 @@ if(inMenu == 0)
     */
     drawWalls();
 
+    drawRocks();
     /*
     drawConsumables()
     Draws consumables in the room
@@ -61,6 +62,8 @@ if(inMenu == 0)
     Create locked doors if there are enemies in the room
     */
 
+    drawBosses();
+
     drawLockedDoors();
 
     drawReloadBar();
@@ -86,14 +89,17 @@ if(inMenu == 0)
 
     updateEnemies();
 
+    updateBosses();
+
     checkItemIntersection();
 
     checkConsumableIntersection();
 
-    checkBulletImpact();
     
     checkEnemyHp();
     
+    checkBossHp();
+
     checkCharacterHp();
     
     checkCharacterImpact();

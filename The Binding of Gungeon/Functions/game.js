@@ -1,5 +1,5 @@
-//setCanvasSize(); // set canvas for the first time
-//window.addEventListener("resize", function(){setCanvasSize()}); //set dimensions once again on resize
+setCanvasSize(); // set canvas for the first time
+window.addEventListener("resize", function(){setCanvasSize()}); //set dimensions once again on resize
 
 
 var z1=2, z2=2, z3=5, z4=5; // variables used for door animations
@@ -50,13 +50,12 @@ for(var i = 0; i < gamestate.mapRoomVisited.length; i++)
         }
     }
 }
-gamestate.mapRoomVisited[5][6] = 1;
 
 
 var currentRoom=[];
 
 var mouse = new Mouse ();
-var character = new Character (1*t,1*t, 7/100*t, t * 0.64,t * 0.64);//x, y, v, w, h
+var character = new Character (1*t,1*t, 5, 32, 48);//x, y, v, w, h
 var slotOne = new SlotOne ();
 var slotTwo = new SlotTwo ();
 var reloadBarOne = new ReloadBar(1, t, t/5, "grey", "green", t/5 * 1.5);
@@ -118,16 +117,16 @@ addEventListener("keyup", function(event) {
 addEventListener('mousemove', function(event){
 	if(innerWidth > innerHeight)
 	{
-		mouse.x=event.clientX-(innerWidth-canvas.width)/2;
+		mouse.x=event.clientX-(innerWidth-(window.innerHeight * 13/11))/2;
 		mouse.y=event.clientY;
 	}
 	else
 	{
 		mouse.x=event.clientX;
-		mouse.y=event.clientY-(innerHeight-canvas.height)/2;
+		mouse.y=event.clientY-(innerHeight-window.innerHeight)/2;
 	}
-    mouse.x = mouse.x * (previousCanvasWidth / canvas.width);    //our size values are set when starting the game and do not change when resizing the window 
-    mouse.y = mouse.y * (previousCanvasWidth / canvas.width);    //since our cursor location is based on the window size, we will have to scale it up on resize
+    mouse.x = mouse.x * (canvas.width / (window.innerHeight * 13/11));    //our size values are set when starting the game and do not change when resizing the window 
+    mouse.y = mouse.y * (canvas.width / (window.innerHeight * 13/11));    //since our cursor location is based on the window size, we will have to scale it up on resize
      
     slotOne.update();
     slotTwo.update();

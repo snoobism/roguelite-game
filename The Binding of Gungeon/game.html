@@ -5,18 +5,19 @@
 	<title>Canvas</title>
 	<style type="text/css">
 		canvas{
-		    image-rendering: optimizeSpeed;
-		    image-rendering: -moz-crisp-edges;
-		    image-rendering: -webkit-optimize-contrast;
-		    image-rendering: optimize-contrast;
-		    image-rendering: pixelated;
-		    -ms-interpolation-mode: nearest-neighbor;
+ image-rendering: optimizeSpeed;             /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast; /* Safari                        */
+  image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated;                 /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 			position:absolute;
             left:50%;
             top: 50%;
             transform:translate(-50%,-50%);
             background-size:100% 100%;
 			background-image: url(img/floor.png);
+
 
 		}
 		img{
@@ -171,6 +172,7 @@
 	</div>
 	<canvas id="canvas"></canvas>
 
+	<script src="Functions/pathFinding.js"></script>
 	<script src="Functions/sources.js"></script>
 	<script src="Functions/pushBack.js"></script>
 	<script src="Functions/checkValidSpecialRoom.js"></script>
@@ -187,6 +189,13 @@
 	<script src="Functions/createMiniMap.js"></script>
 	<script src="Functions/newRoom.js"></script>
 	<script src="Functions/giveItem.js"></script>
+	<script src="Functions/drawFunctions.js"></script>
+	<script src="Functions/checkKeysPressed.js"></script>
+	<script src="Functions/updateFunctions.js"></script>
+	<script src="Functions/updateCharacterHpBar.js"></script>
+	<script src="Functions/checkBulletIntersection.js"></script>
+	<script src="Classes/Rock.js"></script>
+	<script src="Classes/Boss.js"></script>
 	<script src="Classes/Consumable.js"></script>
 	<script src="Classes/Room.js"></script>
 	<script src="Classes/Item.js"></script>
@@ -203,5 +212,6 @@
 	<script src="Functions/animation.js"></script>
 	<script src="Functions/animationChecks.js"></script>
 	<script src="Functions/game.js"></script>
+
 </body>
 </html>

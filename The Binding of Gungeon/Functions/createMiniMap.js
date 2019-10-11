@@ -22,6 +22,10 @@ function createMiniMap(){
 			{
 				cell.style.backgroundColor = "rgba(255,255,0,1)";
 			}
+			if(gamestate.mapArray[i][j] == 4)
+			{
+				cell.style.backgroundColor = "rgba(255,0,0,1)";
+			}
 
 		 	document.getElementById("map").appendChild(cell);
 		}
