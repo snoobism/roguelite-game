@@ -1,0 +1,29 @@
+Changes:
+
+0.1 
+~ separated initial code into different files
+0.2 
+~ sizes now scale when resizing the window
+~ changed cursor
+0.3 
+~ added minimap
+~ added weapon icon + ammo counter
+~ added reload bar
+~ cleaned animation.js into multiple distinct functions
+0.4 
+~ added items
+~ added item rooms
+~ active item switch interface (very basic)
+0.5 
+~ created Room Class
+~ replaced plain 2D arrays in gamestate.mapRoomArray with Room objects
+~ now items load within each room rather than globally
+~ created Consumable Class
+~ added consumable hp
+~ added consumable armour
+~ added consumable bullet armour(+1 max clip size of active items)
+0.6
+~ added Boss Room
+~ created Boss Class
+~ canvas now resizes based on CSS attribute
+~ added body parts for enemies (for better collision / hit detection)
