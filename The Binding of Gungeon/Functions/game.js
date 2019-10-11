@@ -57,7 +57,6 @@ var wallArray = [];
 var bulletArray = [];
 var enemyArray = [];
 var timeout=0;
-var firerate_timeout=0;
 
 var gamestate = new gameState(0);
 
@@ -65,12 +64,27 @@ generateMap();
 generateMapRooms();
 console.log(gamestate.mapArray);
 console.log(gamestate.mapRoomArray);
+gamestate.mapRoomVisited = gamestate.mapArray;
+
+for(var i = 0; i < gamestate.mapRoomVisited.length; i++)
+{
+    for(var j = 0; j < gamestate.mapRoomVisited[0].length; j++)
+    {
+        if(gamestate.mapRoomVisited[i][j] == 0)
+        {
+            gamestate.mapRoomVisited[i][j] = 2; // 0 - visited; 1 - not visited; 2 - undefined
+        }
+    }
+}
+gamestate.mapRoomVisited[5][6] = 0;
+console.log(gamestate.mapRoomVisited);
 
 var currentRoom=[];
 
 var mouse = new Mouse ();
 var character = new Character (1*t,1*t, 7/100*t, (69/100*t)*0.65517,(69/100*t));//x, y, v, w, h
 var weapon = new Weapon (character.w/2, character.h/2, 10.39/100*t, 35*1.8/100*t,35/100*t);//x, y, v, w, h
+var reloadBar = new ReloadBar();
 
 // create object to save all pressed keys
 var keys = {
@@ -96,6 +110,9 @@ addEventListener("keydown", function(event) {
     if (event.keyCode == 68) {
         keys["d"] = true;
     }
+    if (event.keyCode == 82) {
+        keys["r"] = true;
+    }
     
 });
 
@@ -112,6 +129,9 @@ addEventListener("keyup", function(event) {
     if (event.keyCode == 68) {
         keys["d"] = false;
     }
+    if (event.keyCode == 82) {
+        keys["r"] = false;
+    }    
 });
 
 addEventListener('mousemove', function(event){
@@ -140,6 +160,6 @@ addEventListener('mouseup', function(event){
 })
 
 var ok1=0,ok2=0,ok3=0,ok4=0;
+createMiniMap();
 newRoom(0,gamestate.mapPosX,gamestate.mapPosY);
-
 animation();

@@ -34,16 +34,16 @@ function Enemy(x,y,id)
              
              this.update = function()
              {
-                 if (this.x>character.x)
+                 if (this.x > character.x && intersection(character.x, character.y, character.w, character.h, this.x, this.y, this.w, this.h) == false)
                  {
                      this.x -= this.v;
-                 }else {
+                 }else if(intersection(character.x, character.y, character.w, character.h, this.x, this.y, this.w, this.h) == false){
                      this.x += this.v;
                  }
-                 if(this.y>character.y)
+                 if(this.y > character.y && intersection(character.x, character.y, character.w, character.h, this.x, this.y, this.w, this.h) == false)
                  {
                     this.y -= this.v;
-                 }else {
+                 }else if(intersection(character.x, character.y, character.w, character.h, this.x, this.y, this.w, this.h) == false){
                     this.y += this.v;
                  }
              }

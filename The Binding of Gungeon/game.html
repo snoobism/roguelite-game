@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-	<meta charset='utf-8'>
+	<meta charset="utf-8">
 	<title>Canvas</title>
-	<style type='text/css'>
+	<style type="text/css">
 		canvas{
 			
 			position:absolute;
@@ -19,27 +19,70 @@
             overflow: hidden;
             cursor: url(img/cursor.png), auto;
 		}
+		#map{
+			position: absolute; 
+			z-index: 1;
+		}
+		#primary{
+			position: absolute;
+			z-index: 1;
+			right: 5vh;
+			top: 5vh;
+			background-color: white;
+			border:5px solid white;
+		}
+		#primary_img{
+			display: block;
+			width: 10vh;
+			height: 10vh;
+			vertical-align: center;
+			margin: 1vh;
+			background-image: url(img/pistol.png);
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		#primary_ammo{
+			display: block;
+			width: 10vh;
+			height: 3vh;
+			margin: 1vh;
+			text-align: center;
+			vertical-align: center;
+			font-weight: 900;
+			font-family: arial;
+		}
+
 	</style>
 </head>
 <body>
+	<div id = "map"></div>
+	<div id = "primary">
+		<div id = "primary_img"></div>
+		<div id = "primary_ammo">5/5</div>	
+	</div>
 	<canvas></canvas>
 
-	<script src='Functions/gameState.js'></script>
-	<script src='Functions/rooms.js'></script>
-	<script src='Functions/generateMap.js'></script>
-	<script src='Functions/generateMapRooms.js'></script>
-	<script src='Functions/getRandomInt.js'></script>
-	<script src='Functions/intersection.js'></script>
-	<script src='Functions/newRoom.js'></script>
-	<script src='Classes/Wall.js'></script>
-	<script src='Classes/LockedDoor.js'></script>
-	<script src='Classes/Enemy.js'></script>
-	<script src='Classes/Bullet.js'></script>
-	<script src='Classes/Mouse.js'></script>
-	<script src='Classes/Character.js'></script>
-	<script src='Classes/Weapon.js'></script>
-	<script src='Functions/sources.js'></script>
-	<script src='Functions/animation.js'></script>
-	<script src='Functions/game.js'></script>
+	<script src="Functions/gameState.js"></script>
+	<script src="Functions/rooms.js"></script>
+	<script src="Functions/generateMap.js"></script>
+	<script src="Functions/generateMapRooms.js"></script>
+	<script src="Functions/getRandomInt.js"></script>
+	<script src="Functions/intersection.js"></script>
+	<script src="Functions/updateMiniMap.js"></script>
+	<script src="Functions/createMiniMap.js"></script>
+	<script src="Functions/newRoom.js"></script>
+	<script src="Classes/Wall.js"></script>
+	<script src="Classes/LockedDoor.js"></script>
+	<script src="Classes/Enemy.js"></script>
+	<script src="Classes/Bullet.js"></script>
+	<script src="Classes/Mouse.js"></script>
+	<script src="Classes/Character.js"></script>
+	<script src="Classes/Weapon.js"></script>
+	<script src="Classes/ReloadBar.js"></script>				
+	<script src="Functions/sources.js"></script>
+	<script src="Functions/animation.js"></script>
+	<script src="Functions/animationChecks.js"></script>
+	<script src="Functions/game.js"></script>
 </body>
 </html>

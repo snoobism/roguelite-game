@@ -1,31 +1,40 @@
 function Bullet(x,y,v,r,mx,my){
     var adaos_x;
     var adaos_y;
+    this.mx=mx;
+    this.my=my;
     this.x=x;
     this.y=y;
     this.v=v;
     this.r=r;
-    this.mx=mx;
-    this.my=my;
-    this.angle=Math.atan(Math.abs(this.y-this.my)/Math.abs(this.x-this.mx));
-    this.angleRad=this.angle*(Math.PI/180);
-    if(this.mx>this.x){
+
+    this.angle = Math.atan(Math.abs(this.y - this.my) / Math.abs(this.x - this.mx)); // in PI
+    this.angleDeg = this.angle * (180/Math.PI); // in DEG
+    this.angleRad = this.angle * (Math.PI/180); // in RAD
+
+    
+
+    console.log(this.angleDeg);
+    if(this.mx>x){
             
-            adaos_x= this.v * Math.cos(this.angle);
+        adaos_x= this.v * Math.cos(this.angle); 
+    }
+    if(this.my>y){
            
-        }
-        if(this.my>this.y){
-           
-            adaos_y= this.v * Math.sin(this.angle);
-        }
-        if(this.mx<this.x){
-            
-            adaos_x= -this.v * Math.cos(this.angle);
-        }
-        if(this.my<this.y){
-            
-            adaos_y= -this.v * Math.sin(this.angle);
-        }
+        adaos_y= this.v * Math.sin(this.angle);
+    }
+    if(this.mx<x){
+        
+        adaos_x= -this.v * Math.cos(this.angle);
+    }
+    if(this.my<y){
+        
+        adaos_y= -this.v * Math.sin(this.angle);
+    }
+
+
+
+
     this.x += adaos_x;
     this.y += adaos_y;
     this.draw = function(){

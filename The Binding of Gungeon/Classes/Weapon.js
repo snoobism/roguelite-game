@@ -1,5 +1,6 @@
 function Weapon (x,y,v,w,h)
 {
+
     this.x=character.x+character.w/2;
     this.y=character.y+character.h/2;
     this.v=v;
@@ -7,6 +8,14 @@ function Weapon (x,y,v,w,h)
     this.h=h;
     this.angle=Math.atan(Math.abs(character.y+character.h-mouse.y)/Math.abs(character.x+character.w-mouse.x));
     this.angleRad=this.angle * (Math.PI / 180);
+
+    this.clipAmmo = 5;
+    this.clipSize = 5;
+    this.firerate = 300;
+    this.firerate_timeout=0;
+    this.reloadTimeout = 0;
+    this.reloadTime = 1000;
+
     this.draw=function(){
         c.save();
         c.beginPath();
@@ -24,6 +33,7 @@ function Weapon (x,y,v,w,h)
     }
     
     this.update=function(){
+
         this.angle=Math.atan(Math.abs(character.y+character.h-mouse.y)/Math.abs(character.x+character.w-mouse.x));
         this.angleRad=this.angle*(Math.PI/180);
         if(this.x<mouse.x && this.y>mouse.y)

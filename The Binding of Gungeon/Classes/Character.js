@@ -1,13 +1,12 @@
 function Character(x,y,v,w,h)
 {
-    this.x=x;
-    this.y=y;
-    this.v=v;
-    this.w=w;
-    this.h=h;
-    this.hp=5;
-    this.invincibility=1000;
-    this.firerate=300;
+    this.x = x;
+    this.y = y;
+    this.v = v;
+    this.w = w;
+    this.h = h;
+    this.hp = 5;
+    this.invincibility = 1000;
     var wall_collision_w=0;
     var wall_collision_a=0;
     var wall_collision_s=0;

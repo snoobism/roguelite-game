@@ -18,7 +18,7 @@ function newRoom(w,x,y){
 
     weapon.x = character.x + character.r/2;
     weapon.y = character.y + character.r/2;
-
+    console.log(gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY]);
     for(var i=0 ;i < currentRoom.length; i++)
     {
         for (var j=0; j < currentRoom[0].length; j++)
@@ -28,12 +28,13 @@ function newRoom(w,x,y){
                         wallArray.push(new Wall(t * j, t * i, t));
                     }
                 
-                if(typeof currentRoom[i][j] == 'number')
+                if(typeof currentRoom[i][j] == 'number' && gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY] == 1)
                     {
                         enemyArray.push(new Enemy(j * t, i * t, currentRoom[i][j]));
                     }
             }
     }
     bulletArray = []; // delete all bullets
+    updateMiniMap(gamestate.mapRoomVisited, gamestate.mapPosX, gamestate.mapPosY);
 
 }
