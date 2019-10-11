@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='utf-8'>
+	<title>Canvas</title>
+	<style type='text/css'>
+		canvas{
+			
+			position:absolute;
+            left:50%;
+            top: 50%;
+            transform:translate(-50%,-50%);
+            background-size:100% 100%;
+			background-image: url(img/floor.png);
+		}
+		body{
+			margin:0;
+            background: black;
+		}
+	</style>
+</head>
+<body>
+	<canvas></canvas>
+
+	<script src='Functions/gameState.js'></script>
+	<script src='Functions/rooms.js'></script>
+	<script src='Functions/generateMap.js'></script>
+	<script src='Functions/generateMapRooms.js'></script>
+	<script src='Functions/getRandomInt.js'></script>
+	<script src='Functions/intersection.js'></script>
+	<script src='Functions/newRoom.js'></script>
+	<script src='Classes/Wall.js'></script>
+	<script src='Classes/LockedDoor.js'></script>
+	<script src='Classes/Enemy.js'></script>
+	<script src='Classes/Bullet.js'></script>
+	<script src='Classes/Mouse.js'></script>
+	<script src='Classes/Character.js'></script>
+	<script src='Classes/Weapon.js'></script>
+	<script src='Functions/sources.js'></script>
+	<script src='Functions/animation.js'></script>
+	<script src='Functions/game.js'></script>
+</body>
+</html>
