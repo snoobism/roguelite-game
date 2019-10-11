@@ -7,7 +7,7 @@ function Enemy(x,y,id)
          case 1:
              this.w=t;
              this.h=t;
-             this.v=2;
+             this.v=t/30;
              this.hp=5;
              this.sprite=enemy1_sprite;
              var sprite_frame=0;
@@ -15,7 +15,7 @@ function Enemy(x,y,id)
              
              this.draw = function()
              {
-                 c.beginPath();
+                c.beginPath();
                 c.drawImage(this.sprite, sprite_frame * 203, 0, 203, 196, this.x, this.y, this.w, this.h);
                 if (sprite_frame_switch == 1) {
                     sprite_frame_switch = 0;

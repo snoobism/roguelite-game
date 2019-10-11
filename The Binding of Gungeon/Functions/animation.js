@@ -1,4 +1,8 @@
 function animation(){
+if(inMenu == 0)
+{
+    checkEmptyRoom();
+
 
     /*
     screenResizeCheck()
@@ -35,6 +39,12 @@ function animation(){
     drawCharacter();
 
     /*
+    drawItems()
+    Draws items in the room
+    */
+    drawItems();
+
+    /*
     drawEnemies()
     Draws each existing enemy
     */
@@ -54,11 +64,24 @@ function animation(){
     
     checkKeysPressed();
     
-    document.getElementById("primary_ammo").innerHTML = weapon.clipAmmo + "/" + weapon.clipSize;
+    if(slotOne.empty == 0)
+    {
+        document.getElementById("primary_ammo").innerHTML = slotOne.clipAmmo + "/" + slotOne.clipSize;
+        document.getElementById("primary_img").style.backgroundImage = slotOne.itemImageUrl;
+    }
+    if(slotTwo.empty == 0)
+    {
+        document.getElementById("secondary_ammo").innerHTML = slotTwo.clipAmmo + "/" + slotTwo.clipSize;
+        document.getElementById("secondary_img").style.backgroundImage = slotTwo.itemImageUrl;
+    }
     
+
+
     updateBullets();
 
     updateEnemies();
+
+    checkItemIntersection();
 
     checkBulletImpact();
     
@@ -68,6 +91,6 @@ function animation(){
     
     checkCharacterImpact();
 
-    checkEmptyRoom();
     
     }
+}

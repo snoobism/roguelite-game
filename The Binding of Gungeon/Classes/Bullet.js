@@ -1,4 +1,4 @@
-function Bullet(x,y,v,r,mx,my){
+function Bullet(x,y,v,r,mx,my, img, dmg){
     var adaos_x;
     var adaos_y;
     this.mx=mx;
@@ -7,6 +7,8 @@ function Bullet(x,y,v,r,mx,my){
     this.y=y;
     this.v=v;
     this.r=r;
+    this.imgSource = img;
+    this.damage = dmg;
 
     this.angle = Math.atan(Math.abs(this.y - this.my) / Math.abs(this.x - this.mx)); // in PI
     this.angleDeg = this.angle * (180/Math.PI); // in DEG
@@ -39,7 +41,7 @@ function Bullet(x,y,v,r,mx,my){
     this.y += adaos_y;
     this.draw = function(){
         c.beginPath();
-        c.drawImage(char_bullet, 0, 0, 224, 224, this.x, this.y, this.r, this.r);
+        c.drawImage(img, 0, 0, 224, 224, this.x, this.y, this.r, this.r);
     }
     this.update = function () {
         

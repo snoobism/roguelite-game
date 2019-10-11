@@ -12,6 +12,7 @@
             transform:translate(-50%,-50%);
             background-size:100% 100%;
 			background-image: url(img/floor.png);
+
 		}
 		body{
 			margin:0;
@@ -20,10 +21,10 @@
             cursor: url(img/cursor.png), auto;
 		}
 		#map{
-			position: absolute; 
+			position: relative; 
 			z-index: 1;
 		}
-		#primary{
+		#active_slots{
 			position: absolute;
 			z-index: 1;
 			right: 5vh;
@@ -31,13 +32,17 @@
 			background-color: white;
 			border:5px solid white;
 		}
+		#primary{
+			position: relative;
+			display: inline-block;
+			vertical-align: center;
+		}
 		#primary_img{
 			display: block;
 			width: 10vh;
 			height: 10vh;
 			vertical-align: center;
 			margin: 1vh;
-			background-image: url(img/pistol.png);
 			background-size: contain;
 			background-position: center;
 			background-repeat: no-repeat;
@@ -52,19 +57,115 @@
 			font-weight: 900;
 			font-family: arial;
 		}
+		#secondary{
+			position: relative;
+			display: inline-block;
+			vertical-align: center;
+		}
+		#secondary_img{
+			display: block;
+			width: 10vh;
+			height: 10vh;
+			vertical-align: center;
+			margin: 1vh;
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		#secondary_ammo{
+			display: block;
+			width: 10vh;
+			height: 3vh;
+			margin: 1vh;
+			text-align: center;
+			vertical-align: center;
+			font-weight: 900;
+			font-family: arial;
+		}
+		#health{
+			display: block;
+			position: relative;
+		}
+
+		#change_items_container{
+			position: fixed;
+			top:50%;
+			left:50%;
+			transform:translate(-50%, -50%);
+			z-index: 3;
+			margin-top:10vh;
+			width: 100vw;
+			height: 100vh;	
+			display: none;
+		}
+		.change_cont{
+			width:40vw;
+			height: 80vh;
+			margin-left:6vw;
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		#change_primary_slot{
+			background-color: blue;
+		}
+		#change_second_slot{
+			background-color: red;
+		}
+		.change_image{
+			width:35vw;
+			height: 50vh;
+		}
+		.change_name{
+			width:35vw;
+			height: 10vh;
+		}
+		.change_desc{
+			width: 35vw;
+			height: 10vh;
+		}
+
 
 	</style>
 </head>
-<body>
-	<div id = "map"></div>
-	<div id = "primary">
-		<div id = "primary_img"></div>
-		<div id = "primary_ammo">5/5</div>	
+<body oncontextmenu="return false;">
+	<div id = "left_side">
+		<div id = "map"></div>
+		<div id = "health"></div>
+	</div>
+	<div id = "active_slots">
+		<div id = "primary">
+			<div id = "primary_img"></div>
+			<div id = "primary_ammo"></div>	
+		</div>
+		<div id = "secondary">
+			<div id = "secondary_img"></div>
+			<div id = "secondary_ammo"></div>	
+		</div>
+	</div>
+
+	<div id = "change_items_container">
+		<div class = "change_cont" id = "change_primary_slot" onclick = "selectItemSwitch(0)">
+			<div class = "change_image" id = "change_primary_image"></div>
+			<div class = "change_name" id = "change_primary_name"></div>
+			<div class = "cange_desc" id = "change_primary_desc"></div>
+		</div>
+		<div class = "change_cont" id = "change_second_slot" onclick = "selectItemSwitch(1)">
+			<div class = "change_image" id = "change_secondary_image"></div>
+			<div class = "change_name" id = "change_secondary_name"></div>
+			<div class = "cange_desc" id = "change_secondary_desc"></div>		
+		</div>
 	</div>
 	<canvas></canvas>
 
+	<script src="Functions/sources.js"></script>
+	<script src="Functions/pushBack.js"></script>
+	<script src="Functions/checkValidSpecialRoom.js"></script>
+	<script src="Functions/pickUpItem.js"></script>
+	<script src="Functions/selectItemSwitch.js"></script>
 	<script src="Functions/gameState.js"></script>
 	<script src="Functions/rooms.js"></script>
+	<script src="Functions/isVisited.js"></script>
 	<script src="Functions/generateMap.js"></script>
 	<script src="Functions/generateMapRooms.js"></script>
 	<script src="Functions/getRandomInt.js"></script>
@@ -72,15 +173,18 @@
 	<script src="Functions/updateMiniMap.js"></script>
 	<script src="Functions/createMiniMap.js"></script>
 	<script src="Functions/newRoom.js"></script>
+	<script src="Functions/giveItem.js"></script>
+	<script src="Classes/Item.js"></script>
+	<script src="Classes/itemArray.js"></script>
 	<script src="Classes/Wall.js"></script>
 	<script src="Classes/LockedDoor.js"></script>
 	<script src="Classes/Enemy.js"></script>
 	<script src="Classes/Bullet.js"></script>
 	<script src="Classes/Mouse.js"></script>
 	<script src="Classes/Character.js"></script>
-	<script src="Classes/Weapon.js"></script>
-	<script src="Classes/ReloadBar.js"></script>				
-	<script src="Functions/sources.js"></script>
+	<script src="Classes/SlotOne.js"></script>
+	<script src="Classes/SlotTwo.js"></script>	
+	<script src="Classes/ReloadBar.js"></script>
 	<script src="Functions/animation.js"></script>
 	<script src="Functions/animationChecks.js"></script>
 	<script src="Functions/game.js"></script>

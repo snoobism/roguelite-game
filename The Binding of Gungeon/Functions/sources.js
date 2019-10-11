@@ -4,8 +4,14 @@ enemy1_sprite.src = "img/enemy.png";
 weapon_sprite = new Image();
 weapon_sprite.src = "img/pistol.png"; 
 
+weapon_sprite_2 = new Image();
+weapon_sprite_2.src = "img/pistol_2.png"; 
+
 char_bullet = new Image();
 char_bullet.src = "img/char_bullet.png"; 
+
+char_bullet_2 = new Image();
+char_bullet_2.src = "img/char_bullet_2.png"; 
 
 door_sprite = new Image();
 door_sprite.src = "img/door_sprite.png"; 
@@ -18,3 +24,9 @@ char_sprite_move.src = "img/char_spritesheet_moving.png";
 
 wall_sprite = new Image();
 wall_sprite.src = "img/wall_spritesheet.png"; 
+
+item_background = new Image();
+item_background.src = "img/item_background.png"; 
+
+sword = new Image();
+sword.src = "img/sword.png";

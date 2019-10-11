@@ -1,51 +1,3 @@
-var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
-
-var RESIZE_CANVAS = 0;
-
-var previousCanvasWidth;
-var previousCanvasHeight;
-
-var initInnerWidth;
-var initInnerHeight;
-
-var t;
-
-if(window.innerHeight > window.innerWidth)
-    {
-        canvas.width = window.innerWidth;
-        canvas.height = 11/13 * canvas.width;
-        previousCanvasWidth = canvas.width;
-        previousCanvasHeight = canvas.height;
-        t = canvas.width / 13;
-    }
-    else
-    {
-        canvas.height = window.innerHeight;
-        canvas.width = 13/11 * canvas.height;
-        previousCanvasWidth = canvas.width;
-        previousCanvasHeight = canvas.height;
-        t = canvas.height / 11;
-    }
-
-function setCanvasSize(){
-	if(window.innerHeight > window.innerWidth)
-	{
-
-        canvas.width = window.innerWidth;
-        canvas.height = 11/13 * canvas.width;
-        RESIZE_CANVAS = 1;
-    }
-	else
-	{
-
-        canvas.height = window.innerHeight;
-        canvas.width = 13/11 * canvas.height;
-        RESIZE_CANVAS = 1;          
-	}
-	
-}
-
 setCanvasSize(); // set canvas for the first time
 window.addEventListener("resize", function(){setCanvasSize()}); //set dimensions once again on resize
 
@@ -56,15 +8,32 @@ var blockDoor = [];
 var wallArray = [];
 var bulletArray = [];
 var enemyArray = [];
+var itemClassArray = [];
+
+var currentClassItemPickedId;
+var currentClassItemPickedIndex;
+var itemPickUpTimeout = 0;
+var itemSelected = 0;
+var switchedItemId;
+
+var inMenu = 0;
 var timeout=0;
 
 var gamestate = new gameState(0);
 
 generateMap();
 generateMapRooms();
-console.log(gamestate.mapArray);
-console.log(gamestate.mapRoomArray);
-gamestate.mapRoomVisited = gamestate.mapArray;
+
+//gamestate.mapRoomVisited = [...gamestate.mapArray];
+
+for(var i = 0; i < gamestate.mapRoomVisited.length; i++)
+{
+    for(var j = 0; j < gamestate.mapRoomVisited[0].length; j++)
+    {
+
+        gamestate.mapRoomVisited[i][j] = gamestate.mapArray[i][j]; // 0 - visited; 1 - not visited; 2 - undefined ; 3.5 - item room adjacent, not visited ; 3 - item room, visited
+    }
+}
 
 for(var i = 0; i < gamestate.mapRoomVisited.length; i++)
 {
@@ -72,19 +41,29 @@ for(var i = 0; i < gamestate.mapRoomVisited.length; i++)
     {
         if(gamestate.mapRoomVisited[i][j] == 0)
         {
-            gamestate.mapRoomVisited[i][j] = 2; // 0 - visited; 1 - not visited; 2 - undefined
+            gamestate.mapRoomVisited[i][j] = 2;
+        }
+        if(gamestate.mapRoomVisited[i][j] == 1)
+        {
+            gamestate.mapRoomVisited[i][j] = 0; // 0 - visited; 1 - not visited; 2 - undefined ; 3.5 - item room adjacent, not visited ; 3 - item room, visited
         }
     }
 }
-gamestate.mapRoomVisited[5][6] = 0;
-console.log(gamestate.mapRoomVisited);
+gamestate.mapRoomVisited[5][6] = 1;
+
 
 var currentRoom=[];
 
 var mouse = new Mouse ();
 var character = new Character (1*t,1*t, 7/100*t, (69/100*t)*0.65517,(69/100*t));//x, y, v, w, h
-var weapon = new Weapon (character.w/2, character.h/2, 10.39/100*t, 35*1.8/100*t,35/100*t);//x, y, v, w, h
-var reloadBar = new ReloadBar();
+var slotOne = new SlotOne ();
+var slotTwo = new SlotTwo ();
+var reloadBarOne = new ReloadBar(1, t, t/5, "grey", "green", t/5 * 1.5);
+var reloadBarTwo = new ReloadBar(2, t, t/5, "white", "red", t/5 * 3.5);
+giveItem(slotOne, 0);
+
+
+updateCharacterHpBar(); // initialize hp bar drawn
 
 // create object to save all pressed keys
 var keys = {
@@ -92,9 +71,9 @@ var keys = {
     a: false,
     s: false,
     d: false,
-    clic: false
+    clic1: false,
+    clic2: false
 };
-
 
 addEventListener("keydown", function(event) {
 // save status of the button 'pressed' == 'true'
@@ -148,15 +127,28 @@ addEventListener('mousemove', function(event){
     mouse.x = mouse.x * (previousCanvasWidth / canvas.width);    //our size values are set when starting the game and do not change when resizing the window 
     mouse.y = mouse.y * (previousCanvasWidth / canvas.width);    //since our cursor location is based on the window size, we will have to scale it up on resize
      
-    weapon.update();
+    slotOne.update();
+    slotTwo.update();
 })
 
 var k=0;
 addEventListener('mousedown', function(event){
-    keys['clic'] = true;
+    if(event.which == 1){
+        keys['clic1'] = true;
+    }
+    else if(event.which == 3)
+    {
+        keys['clic2'] = true;
+    }
 })
 addEventListener('mouseup', function(event){
-    keys['clic'] = false;
+    if(event.which == 1){
+        keys['clic1'] = false;
+    }
+    else if(event.which == 3)
+    {
+        keys['clic2'] = false;
+    }
 })
 
 var ok1=0,ok2=0,ok3=0,ok4=0;

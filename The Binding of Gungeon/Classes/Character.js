@@ -1,12 +1,38 @@
 function Character(x,y,v,w,h)
 {
-    this.x = x;
-    this.y = y;
-    this.v = v;
+    this.v = v*2;
     this.w = w;
     this.h = h;
-    this.hp = 5;
+    this.x = x;
+    this.y = y;
+    
+    this.currentHp = 5;
+    this.maxHp = 15;
+    this.itemArray = [];
     this.invincibility = 1000;
+
+    this.passiveItems =[];
+    this.passiveDamage = 0;
+    this.passiveVelocity = 0;
+    this.passiveRange = 0;
+    this.passiveShotSpeed = 0;
+/*
+    DIRECTION INFO
+    direction [x y]
+    -1 -1 => NW
+    -1  0 => W
+    -1  1 => SW
+
+     0 -1 => N
+     0  0 => stationary
+     0  1 => S
+
+     1 -1 => NE
+     1  0 => E
+     1  1 => SE
+*/
+
+    this.direction = [0, 0];
     var wall_collision_w=0;
     var wall_collision_a=0;
     var wall_collision_s=0;
@@ -53,8 +79,10 @@ function Character(x,y,v,w,h)
 }
     this.update=function(key_pressed){
         
+        this.v = this.v + this.passiveVelocity;
        
-        
+        var xBeforeVelocity = this.x;
+        var yBeforeVelocity = this.y;
         
         switch(key_pressed)
         {
@@ -95,6 +123,35 @@ function Character(x,y,v,w,h)
                 
         }
         
+        var xDifference = this.x - xBeforeVelocity;
+        var yDifference = this.y - yBeforeVelocity;
+
+        if(xDifference > 0)
+        {
+            this.direction[0] = 1;
+        }
+        if(xDifference == 0)
+        {
+            this.direction[0] = 0;
+        }
+        if(xDifference < 0)
+        {
+            this.direction[0] = -1;
+        }
+
+        if(yDifference > 0)
+        {
+            this.direction[1] = 1;
+        }
+        if(yDifference == 0)
+        {
+            this.direction[1] = 0;
+        }
+        if(yDifference < 0)
+        {
+            this.direction[1] = -1;
+        }
+
         c.closePath();
         
     }

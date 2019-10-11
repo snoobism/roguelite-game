@@ -78,11 +78,31 @@ function drawWalls(){
 }
 
 function drawCharacter(){
-    if(character.hp>0)
+    if(character.currentHp>0)
     {
 
         character.draw(); 
-        weapon.draw();    
+        if(slotOne.empty == 0)
+        {
+            slotOne.draw();    
+        }
+        if(slotTwo.empty == 0)
+        {
+            slotTwo.draw();
+        }
+    }
+}
+
+function drawItems(){
+    for(var i = 0; i < itemClassArray.length; i++)
+    {
+        if(itemClassArray[i].mapX == gamestate.mapPosX && itemClassArray[i].mapY == gamestate.mapPosY)
+        {
+            if(itemClassArray[i] != undefined)
+            {
+                itemClassArray[i].draw();
+            }
+        }
     }
 }
 
@@ -179,10 +199,15 @@ function drawLockedDoors(){
 }
 
 function drawReloadBar(){
-    reloadBar.draw();
-    if(weapon.reloadTimeout == 1)
+    reloadBarOne.draw();
+    if(slotOne.reloadTimeout == 1)
     {
-        reloadBar.progress += 1;
+        reloadBarOne.progress += 1;
+    }
+    reloadBarTwo.draw();
+    if(slotTwo.reloadTimeout == 1)
+    {
+        reloadBarTwo.progress += 1;
     }
 }
 
@@ -191,47 +216,69 @@ function checkKeysPressed(){
 	if (keys['w'] == true) {
         
         character.update('w');
-        weapon.update();
+        slotOne.update();
+        slotTwo.update();
     }
 
     if (keys['a'] == true) {
         
         character.update('a');
-        weapon.update();
+        slotOne.update();
+        slotTwo.update();
     }
 
     if (keys['s'] == true) {
         
         character.update('s');
-        weapon.update();
+        slotOne.update();
+        slotTwo.update();
     }
 
     if (keys['d'] == true) {
         
         character.update('d');
-        weapon.update();
+        slotOne.update();
+        slotTwo.update();
     }
 
-    if (keys['clic'] == true) {
-        if (weapon.firerate_timeout == 0 && weapon.clipAmmo > 0 && weapon.reloadTimeout == 0) {
-            bulletArray[k] = new Bullet(weapon.x + weapon.w * Math.cos(weapon.angle), weapon.y + weapon.h * Math.sin(weapon.angle), 13.85/100*t, 25/100*t, mouse.x, mouse.y);
-            k++;
-            weapon.firerate_timeout = 1;
-            weapon.clipAmmo--;
+    if (keys['clic1'] == true) {
+        if (slotOne.useTimeout == 0)
+        {
+            slotOne.active();
+            slotOne.useTimeout = 1;
             setTimeout(function () {
-                weapon.firerate_timeout = 0;
-            }, weapon.firerate);
+                slotOne.useTimeout = 0;
+            }, slotOne.firerate);
+        }
+    }
+    if (keys['clic2'] == true) {
+        if (slotTwo.useTimeout == 0)
+        {   
+            slotTwo.active();
+            slotTwo.useTimeout = 1;
+            setTimeout(function () {
+                slotTwo.useTimeout = 0;
+            }, slotTwo.firerate);
         }
     }
 
-    if(keys['r'] == true && weapon.reloadTimeout == 0 && weapon.clipAmmo != weapon.clipSize)
+    if(keys['r'] == true && slotOne.reloadTimeout == 0 && slotOne.clipAmmo != slotOne.clipSize)
     {
-        weapon.reloadTimeout = 1;
+        slotOne.reloadTimeout = 1;
         setTimeout(function(){
-            weapon.clipAmmo = weapon.clipSize;
-            weapon.reloadTimeout = 0;
-            reloadBar.progress = 0;
-        }, weapon.reloadTime)
+            slotOne.clipAmmo = slotOne.clipSize;
+            slotOne.reloadTimeout = 0;
+            reloadBarOne.progress = 0;
+        }, slotOne.reloadTime)
+    }
+    if(keys['r'] == true && slotTwo.reloadTimeout == 0 && slotTwo.clipAmmo != slotTwo.clipSize)
+    {
+        slotTwo.reloadTimeout = 1;
+        setTimeout(function(){
+            slotTwo.clipAmmo = slotTwo.clipSize;
+            slotTwo.reloadTimeout = 0;
+            reloadBarTwo.progress = 0;
+        }, slotTwo.reloadTime)
     }
 }
 
@@ -262,8 +309,8 @@ function checkBulletImpact(){
             if (bulletArray[i] != undefined) {
                 if (intersection(bulletArray[i].x, bulletArray[i].y, bulletArray[i].r, bulletArray[i].r, enemyArray[j].x, enemyArray[j].y, enemyArray[j].w, enemyArray[j].h)) {
 
+                    enemyArray[j].hp = enemyArray[j].hp - bulletArray[i].damage;
                     bulletArray[i].remove();
-                    enemyArray[j].hp--;
 
                 }
             }
@@ -282,20 +329,21 @@ function checkEnemyHp(){
 }
 
 function checkCharacterHp(){
-    if(character.hp <= 0)  //check character hp
+    if(character.currentHp <= 0)  //check character hp
         {
             character.remove();
         }
 }
 
 function checkCharacterImpact(){
-	for(var j = 0; j <= enemyArray.length - 1; j++)
+	for(var j = 0; j < enemyArray.length; j++)
         {
             if(intersection(character.x, character.y, character.w, character.h, enemyArray[j].x, enemyArray[j].y, enemyArray[j].w, enemyArray[j].h))
                 {
                     if(timeout == 0)
                         {
-                            character.hp--;
+                            character.currentHp--;
+                            updateCharacterHpBar();
                             timeout = 1;
                             setTimeout(function(){
                             	timeout = 0;
@@ -309,6 +357,82 @@ function checkCharacterImpact(){
 function checkEmptyRoom(){
     if(enemyArray.length == 0)
     {
-        gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY] = 0;
+        gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY] = 1;
+    }
+}
+
+function checkItemIntersection(){
+    for(var j = 0; j < itemClassArray.length; j++)
+    {
+        if(intersection(character.x, character.y, character.w, character.h, itemClassArray[j].x, itemClassArray[j].y, itemClassArray[j].w, itemClassArray[j].h) && itemClassArray[j].mapX == gamestate.mapPosX && itemClassArray[j].mapY == gamestate.mapPosY && itemPickUpTimeout == 0)
+            {
+                // pickup item
+                itemPickUpTimeout = 1;
+                setTimeout(function(){
+                    itemPickUpTimeout = 0;
+                }, 2000);
+                if(itemArray[itemClassArray[j].itemId].itemType == "active")
+                    {
+                        pushBack(itemClassArray[j]);
+                        currentClassItemPickedId = itemClassArray[j].itemId;
+                        currentClassItemPickedIndex = j;
+                        var slotOneEmptyFlag = slotOne.empty;//slotOne.empty before pick-up
+                        var slotTwoEmptyFlag = slotTwo.empty;//slotTwo.empty before pick-up 
+                        pickUpItem(itemClassArray[j]);
+
+                        if(slotOneEmptyFlag || slotTwoEmptyFlag)
+                        {
+                            itemClassArray[j].remove();
+                        }
+                    }
+                else if(itemArray[itemClassArray[j].itemId].itemType == "passive")
+                {
+                    giveItem("passive", itemClassArray[j].itemId);
+                    itemClassArray[j].remove();
+                }
+            }
+    }
+}
+
+function updateCharacterHpBar(){
+    var i = document.getElementById("health").childElementCount;
+    console.log(character.currentHp);
+    while(i != character.maxHp)
+    {
+        if(i < character.maxHp){
+            var heart = document.createElement("div");
+            heart.id = "heart_cont" + i;
+            heart.style.position = "relative";
+            heart.style.display = "inline-block";
+            heart.style.width = 5 + "vh";
+            heart.style.height = 5 + "vh";
+            heart.style.marginLeft = "1vh";
+            heart.style.marginTop = "1vh";
+            heart.style.backgroundImage = "url(img/heart_empty.png)"
+            heart.style.backgroundSize = "contain";
+            heart.style.backgroundRepeat = "no-repeat";
+            heart.style.backgroundPosition = "center";
+            heart.style.zIndex = 1;
+            document.getElementById("health").appendChild(heart);
+            i++;
+        }
+        else if(i > character.maxHp){
+            document.getElementById("heart_cont" + i).remove();
+            i--;
+        }
+    }
+
+    for(var i = 0; i < character.maxHp; i++)
+    {
+        if(i < character.currentHp){
+
+            document.getElementById("heart_cont" + i).style.backgroundImage = "url(img/heart_full.png)";
+        
+        }
+        else{
+
+            document.getElementById("heart_cont" + i).style.backgroundImage = "url(img/heart_empty.png)";
+        }
+
     }
 }

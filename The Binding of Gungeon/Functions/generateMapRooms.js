@@ -23,25 +23,25 @@ roomsArray_14 - W
  
 function generateMapRooms() {
     var up, down, left, right;
-    for (var i = 0; i <= gamestate.mapArray.length - 2; i++) {
-        for (var j = 0; j <= gamestate.mapArray[i].length - 2; j++) {
+    for (var i = 1; i <= gamestate.mapArray.length - 2; i++) {
+        for (var j = 1; j <= gamestate.mapArray[i].length - 2; j++) {
             if (gamestate.mapArray[i][j] == 1) {
-                if (gamestate.mapArray[i - 1][j] == 1) {
+                if (gamestate.mapArray[i - 1][j] != 0) {
                     up = 1;
                 } else {
                     up = 0;
                 }
-                if (gamestate.mapArray[i + 1][j] == 1) {
+                if (gamestate.mapArray[i + 1][j] != 0) {
                     down = 1;
                 } else {
                     down = 0;
                 }
-                if (gamestate.mapArray[i][j + 1] == 1) {
+                if (gamestate.mapArray[i][j + 1] != 0) {
                     right = 1;
                 } else {
                     right = 0;
                 }
-                if (gamestate.mapArray[i][j - 1] == 1) {
+                if (gamestate.mapArray[i][j - 1] != 0) {
                     left = 1;
                 } else {
                     left = 0;
@@ -104,8 +104,48 @@ function generateMapRooms() {
                             }
                         }
                     }
-                };
+                }; //elses end
             }
+            if (gamestate.mapArray[i][j] == 3) {
+                if (gamestate.mapArray[i - 1][j] == 1) {
+                    up = 1;
+                } else {
+                    up = 0;
+                }
+                if (gamestate.mapArray[i + 1][j] == 1) {
+                    down = 1;
+                } else {
+                    down = 0;
+                }
+                if (gamestate.mapArray[i][j + 1] == 1) {
+                    right = 1;
+                } else {
+                    right = 0;
+                }
+                if (gamestate.mapArray[i][j - 1] == 1) {
+                    left = 1;
+                } else {
+                    left = 0;
+                }
+
+                if (left == 1 && right == 0 && up == 0 && down == 0) 
+                {
+                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_left[0];
+                }     
+                else if (left == 0 && right == 1 && up == 0 && down == 0) 
+                {
+                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_right[0];
+                }
+                else if (left == 0 && right == 0 && up == 1 && down == 0) 
+                {
+                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_up[0];
+                }
+                else if (left == 0 && right == 0 && up == 0 && down == 1)
+                {
+                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_down[0];
+                }
+            }       
+
         }
     }
 

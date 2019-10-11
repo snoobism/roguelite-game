@@ -14,18 +14,20 @@ function createMiniMap(){
 			cell.style.marginLeft = j * 2 + "vw";
 			cell.style.marginTop = i * 2 + "vh";
 
-			if(gamestate.mapRoomVisited[i][j] == 0)
-			{
-				cell.style.backgroundColor = "rgba(255,255,255,1)";
-				cell.style.boxShadow = "0px 0px 2px black";											
-			}
-			else if(gamestate.mapRoomVisited[i][j] == 1)
+			if(gamestate.mapArray[i][j] == 1)
 			{
 				cell.style.backgroundColor = "rgba(255,255,255,0)";
-				cell.style.boxShadow = "0px 0px 2px black"
+			}
+			if(gamestate.mapArray[i][j] == 3)
+			{
+				cell.style.backgroundColor = "rgba(255,255,0,1)";
 			}
 
 		 	document.getElementById("map").appendChild(cell);
 		}
 	}
+	document.getElementById("left_side").style.width = document.getElementById("map").offsetWidth;
+	document.getElementById("map").style.height = 22 + "vh";
+	document.getElementById("health").style.width = 20 + "vw";
+
 }
