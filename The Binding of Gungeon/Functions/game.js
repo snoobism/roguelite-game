@@ -1,5 +1,5 @@
-setCanvasSize(); // set canvas for the first time
-window.addEventListener("resize", function(){setCanvasSize()}); //set dimensions once again on resize
+//setCanvasSize(); // set canvas for the first time
+//window.addEventListener("resize", function(){setCanvasSize()}); //set dimensions once again on resize
 
 
 var z1=2, z2=2, z3=5, z4=5; // variables used for door animations
@@ -9,6 +9,7 @@ var wallArray = [];
 var bulletArray = [];
 var enemyArray = [];
 var itemClassArray = [];
+var consumableClassArray = [];
 
 var currentClassItemPickedId;
 var currentClassItemPickedIndex;
@@ -16,7 +17,7 @@ var itemPickUpTimeout = 0;
 var itemSelected = 0;
 var switchedItemId;
 
-var inMenu = 0;
+var inMenu = 0; 
 var timeout=0;
 
 var gamestate = new gameState(0);
@@ -55,12 +56,13 @@ gamestate.mapRoomVisited[5][6] = 1;
 var currentRoom=[];
 
 var mouse = new Mouse ();
-var character = new Character (1*t,1*t, 7/100*t, (69/100*t)*0.65517,(69/100*t));//x, y, v, w, h
+var character = new Character (1*t,1*t, 7/100*t, t * 0.64,t * 0.64);//x, y, v, w, h
 var slotOne = new SlotOne ();
 var slotTwo = new SlotTwo ();
 var reloadBarOne = new ReloadBar(1, t, t/5, "grey", "green", t/5 * 1.5);
 var reloadBarTwo = new ReloadBar(2, t, t/5, "white", "red", t/5 * 3.5);
 giveItem(slotOne, 0);
+giveItem(slotTwo, 0);
 
 
 updateCharacterHpBar(); // initialize hp bar drawn

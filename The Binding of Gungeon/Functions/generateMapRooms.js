@@ -47,49 +47,49 @@ function generateMapRooms() {
                     left = 0;
                 }
                 if (left == 1 && right == 1 && up == 1 && down == 1) {
-                    gamestate.mapRoomArray[i][j] = gamestate.roomsArray_0[0];
+                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_0[0]);
                 } else {
                     if (left == 1 && right == 0 && up == 1 && down == 1) {
-                        gamestate.mapRoomArray[i][j] = gamestate.roomsArray_1[0];
+                        gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_1[0]);
                     } else {
                         if (left == 1 && right == 1 && up == 1 && down == 0) {
-                            gamestate.mapRoomArray[i][j] = gamestate.roomsArray_2[0];
+                            gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_2[0]);
                         } else {
                             if (left == 0 && right == 1 && up == 1 && down == 1) {
-                                gamestate.mapRoomArray[i][j] = gamestate.roomsArray_3[0];
+                                gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_3[0]);
                             } else {
                                 if (left == 1 && right == 1 && up == 0 && down == 1) {
-                                    gamestate.mapRoomArray[i][j] = gamestate.roomsArray_4[0];
+                                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_4[0]);
                                 } else {
                                     if (left == 0 && right == 0 && up == 1 && down == 1) {
-                                        gamestate.mapRoomArray[i][j] = gamestate.roomsArray_5[0];
+                                        gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_5[0]);
                                     } else {
                                         if (left == 1 && right == 1 && up == 0 && down == 0) {
-                                            gamestate.mapRoomArray[i][j] = gamestate.roomsArray_6[0];
+                                            gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_6[0]);
                                         } else {
                                             if (left == 0 && right == 1 && up == 1 && down == 0) {
-                                                gamestate.mapRoomArray[i][j] = gamestate.roomsArray_7[0];
+                                                gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_7[0]);
                                             } else {
                                                 if (left == 1 && right == 0 && up == 1 && down == 0) {
-                                                    gamestate.mapRoomArray[i][j] = gamestate.roomsArray_8[0];
+                                                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_8[0]);
                                                 } else {
                                                     if (left == 0 && right == 1 && up == 0 && down == 1) {
-                                                        gamestate.mapRoomArray[i][j] = gamestate.roomsArray_9[0];
+                                                        gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_9[0]);
                                                     } else {
                                                         if (left == 1 && right == 0 && up == 0 && down == 1) {
-                                                            gamestate.mapRoomArray[i][j] = gamestate.roomsArray_10[0];
+                                                            gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_10[0]);
                                                         } else {
                                                             if (left == 0 && right == 1 && up == 0 && down == 0) {
-                                                                gamestate.mapRoomArray[i][j] = gamestate.roomsArray_11[0];
+                                                                gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_11[0]);
                                                             } else {
                                                                 if (left == 0 && right == 0 && up == 1 && down == 0) {
-                                                                    gamestate.mapRoomArray[i][j] = gamestate.roomsArray_12[0];
+                                                                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_12[0]);
                                                                 } else {
                                                                     if (left == 0 && right == 0 && up == 0 && down == 1) {
-                                                                        gamestate.mapRoomArray[i][j] = gamestate.roomsArray_13[0];
+                                                                        gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_13[0]);
                                                                     } else {
                                                                         if (left == 1 && right == 0 && up == 0 && down == 0) {
-                                                                            gamestate.mapRoomArray[i][j] = gamestate.roomsArray_14[0];
+                                                                            gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.roomsArray_14[0]);
                                                                         }
                                                                     }
                                                                 }
@@ -130,19 +130,19 @@ function generateMapRooms() {
 
                 if (left == 1 && right == 0 && up == 0 && down == 0) 
                 {
-                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_left[0];
+                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.itemRooms_left[0]);
                 }     
                 else if (left == 0 && right == 1 && up == 0 && down == 0) 
                 {
-                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_right[0];
+                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.itemRooms_right[0]);
                 }
                 else if (left == 0 && right == 0 && up == 1 && down == 0) 
                 {
-                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_up[0];
+                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.itemRooms_up[0]);
                 }
                 else if (left == 0 && right == 0 && up == 0 && down == 1)
                 {
-                    gamestate.mapRoomArray[i][j] = gamestate.itemRooms_down[0];
+                    gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.itemRooms_down[0]);
                 }
             }       
 

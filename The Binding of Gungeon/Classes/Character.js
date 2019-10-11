@@ -6,8 +6,10 @@ function Character(x,y,v,w,h)
     this.x = x;
     this.y = y;
     
+    this.currentBulletArmour = 5;
+    this.currentArmour = 1;
     this.currentHp = 5;
-    this.maxHp = 15;
+    this.maxHp = 5;
     this.itemArray = [];
     this.invincibility = 1000;
 
@@ -42,8 +44,10 @@ function Character(x,y,v,w,h)
     var char_frame_2=0;
     var char_frame_switch_2 = 1;
     this.draw = function () {
+        /*
         if (keys['w'] == true || keys['s'] == true || keys['a'] == true || keys['d'] == true) {
             c.beginPath();
+
             c.drawImage(char_sprite_move, char_frame_2 * 133, 0, 133, 203, this.x, this.y, this.w, this.h);
             if (char_frame_switch_2 == 1) {
                 char_frame_switch_2 = 0;
@@ -75,6 +79,12 @@ function Character(x,y,v,w,h)
                 }, 300);
             }
         }
+*/
+        c.beginPath();
+                            c.imageSmoothingEnabled = false;
+
+        c.drawImage(char_sprite_move, 0, 0, 16, 16, parseInt(this.x), parseInt(this.y), parseInt(this.w), parseInt(this.h));
+
 
 }
     this.update=function(key_pressed){
@@ -83,7 +93,7 @@ function Character(x,y,v,w,h)
        
         var xBeforeVelocity = this.x;
         var yBeforeVelocity = this.y;
-        
+        /*
         switch(key_pressed)
         {
             case "d":
@@ -122,7 +132,127 @@ function Character(x,y,v,w,h)
                 break;
                 
         }
+        */
+        var checkIntersectionW = 0;
+        var checkIntersectionA = 0;
+        var checkIntersectionS = 0;
+        var checkIntersectionD = 0;
         
+        switch(key_pressed)
+        {
+
+            case "d":
+                for(var i = 0; i < wallArray.length; i++)
+                {
+                    if(intersection(this.x + this.v, this.y, this.w, this.h, wallArray[i].x, wallArray[i].y, wallArray[i].w, wallArray[i].h) == true)
+                    {
+                        checkIntersectionD = 1;
+                    }
+                }
+                for(var i = 0; i < enemyArray.length; i++)
+                {
+                    if(intersection(this.x + this.v, this.y, this.w, this.h, enemyArray[i].x, enemyArray[i].y, enemyArray[i].w, enemyArray[i].h) == true)
+                    {
+                        checkIntersectionD = 1;
+                    }               
+                }
+                for(var i = 0; i < blockDoor.length; i++)
+                {
+                    if(intersection(this.x + this.v, this.y, this.w, this.h, blockDoor[i].x, blockDoor[i].y, blockDoor[i].w, blockDoor[i].h) == true)
+                    {
+                        checkIntersectionD = 1;
+                    }               
+                }
+                if(checkIntersectionD == 0)
+                {
+                    this.x += this.v;
+                }
+                break;
+            case "a":
+                for(var i = 0; i < wallArray.length; i++)
+                {
+                    if(intersection(this.x - this.v, this.y, this.w, this.h, wallArray[i].x, wallArray[i].y, wallArray[i].w, wallArray[i].h) == true)
+                    {
+                        checkIntersectionA = 1;
+                    }
+                }
+                for(var i = 0; i < enemyArray.length; i++)
+                {
+                    if(intersection(this.x - this.v, this.y, this.w, this.h, enemyArray[i].x, enemyArray[i].y, enemyArray[i].w, enemyArray[i].h) == true)
+                    {
+                        checkIntersectionA = 1;
+                    }               
+                }
+                for(var i = 0; i < blockDoor.length; i++)
+                {
+                    if(intersection(this.x - this.v, this.y, this.w, this.h, blockDoor[i].x, blockDoor[i].y, blockDoor[i].w, blockDoor[i].h) == true)
+                    {
+                        checkIntersectionA = 1;
+                    }               
+                }
+                if(checkIntersectionA == 0)
+                {
+                    this.x -= this.v;
+                }
+                break;
+            case "w":
+                for(var i = 0; i < wallArray.length; i++)
+                {
+                    if(intersection(this.x, this.y - this.v, this.w, this.h, wallArray[i].x, wallArray[i].y, wallArray[i].w, wallArray[i].h) == true)
+                    {
+                        checkIntersectionW = 1;
+                    }
+                }
+                for(var i = 0; i < enemyArray.length; i++)
+                {
+                    if(intersection(this.x, this.y - this.v, this.w, this.h, enemyArray[i].x, enemyArray[i].y, enemyArray[i].w, enemyArray[i].h) == true)
+                    {
+                        checkIntersectionW = 1;
+                    }               
+                }
+                for(var i = 0; i < blockDoor.length; i++)
+                {
+                    if(intersection(this.x, this.y - this.v, this.w, this.h, blockDoor[i].x, blockDoor[i].y, blockDoor[i].w, blockDoor[i].h) == true)
+                    {
+                        checkIntersectionW = 1;
+                    }               
+                }
+                if(checkIntersectionW == 0)
+                {
+                    this.y -= this.v;
+                }
+                break;
+            case "s":
+                for(var i = 0; i < wallArray.length; i++)
+                {
+                    if(intersection(this.x, this.y + this.v, this.w, this.h, wallArray[i].x, wallArray[i].y, wallArray[i].w, wallArray[i].h) == true)
+                    {
+                        checkIntersectionS = 1;
+                    }
+                }
+                for(var i = 0; i < enemyArray.length; i++)
+                {
+                    if(intersection(this.x, this.y + this.v, this.w, this.h, enemyArray[i].x, enemyArray[i].y, enemyArray[i].w, enemyArray[i].h) == true)
+                    {
+                        checkIntersectionS = 1;
+                    }               
+                }
+                for(var i = 0; i < blockDoor.length; i++)
+                {
+                    if(intersection(this.x, this.y + this.v, this.w, this.h, blockDoor[i].x, blockDoor[i].y, blockDoor[i].w, blockDoor[i].h) == true)
+                    {
+                        checkIntersectionS = 1;
+                    }               
+                }
+                if(checkIntersectionS == 0)
+                {
+                    this.y += this.v;
+                }
+                break;
+                
+        }
+        
+
         var xDifference = this.x - xBeforeVelocity;
         var yDifference = this.y - yBeforeVelocity;
 

@@ -1,4 +1,4 @@
-function giveItem(slotChosen, id){
+	function giveItem(slotChosen, id){
 	if(slotChosen === "passive" && itemArray[id].itemType == "passive")
 	{
 		character.passiveItems.push(itemArray[id]);
@@ -16,8 +16,8 @@ function giveItem(slotChosen, id){
 		slotChosen.itemImageUrl = itemArray[id].itemImageUrl;
 
 		slotChosen.shotSpeed = itemArray[id].shotSpeed;
-		slotChosen.clipAmmo = itemArray[id].clipAmmo;
-		slotChosen.clipSize = itemArray[id].clipSize;
+		slotChosen.clipAmmo = itemArray[id].clipAmmo + character.currentBulletArmour;
+		slotChosen.clipSize = itemArray[id].clipSize + character.currentBulletArmour;
 		slotChosen.firerate = itemArray[id].firerate;
 		slotChosen.reloadTime = itemArray[id].reloadTime;
 		slotChosen.bulletDamage = itemArray[id].bulletDamage;

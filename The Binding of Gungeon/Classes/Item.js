@@ -34,7 +34,7 @@ function Item(roomX, roomY, mapX, mapY, id){
 	}
 
     this.remove= function(){
-        var z=itemClassArray.indexOf(this);
-        itemClassArray.splice(z,1);
+        var z=gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items.indexOf(this);
+        gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items.splice(z,1);
     }
 }

@@ -3,6 +3,7 @@ function Wall(x,y,w)
     this.x=x;
     this.y=y;
     this.w=w;
+    this.h=w;
     this.random=getRandomInt(0, 4);
     this.random2=getRandomInt(7, 11);
     this.random3=getRandomInt(13, 17);
@@ -12,6 +13,7 @@ function Wall(x,y,w)
 
         if (this.x == 0 && this.y == 0) {
             c.beginPath();
+
             c.drawImage(wall_sprite, 5 * 224, 0, 224, 224, this.x, this.y, this.w, this.w);
         }
         if (this.y == 0 && (this.x > 0 && this.x < t * 12)) {

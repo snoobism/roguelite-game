@@ -5,7 +5,12 @@
 	<title>Canvas</title>
 	<style type="text/css">
 		canvas{
-			
+		    image-rendering: optimizeSpeed;
+		    image-rendering: -moz-crisp-edges;
+		    image-rendering: -webkit-optimize-contrast;
+		    image-rendering: optimize-contrast;
+		    image-rendering: pixelated;
+		    -ms-interpolation-mode: nearest-neighbor;
 			position:absolute;
             left:50%;
             top: 50%;
@@ -14,9 +19,17 @@
 			background-image: url(img/floor.png);
 
 		}
+		img{
+		    image-rendering: optimizeSpeed;
+		    image-rendering: -moz-crisp-edges;
+		    image-rendering: -webkit-optimize-contrast;
+		    image-rendering: optimize-contrast;
+		    image-rendering: pixelated;
+		    -ms-interpolation-mode: nearest-neighbor;
+		}
 		body{
 			margin:0;
-            background: black;
+            background: #333333;
             overflow: hidden;
             cursor: url(img/cursor.png), auto;
 		}
@@ -156,7 +169,7 @@
 			<div class = "cange_desc" id = "change_secondary_desc"></div>		
 		</div>
 	</div>
-	<canvas></canvas>
+	<canvas id="canvas"></canvas>
 
 	<script src="Functions/sources.js"></script>
 	<script src="Functions/pushBack.js"></script>
@@ -174,6 +187,8 @@
 	<script src="Functions/createMiniMap.js"></script>
 	<script src="Functions/newRoom.js"></script>
 	<script src="Functions/giveItem.js"></script>
+	<script src="Classes/Consumable.js"></script>
+	<script src="Classes/Room.js"></script>
 	<script src="Classes/Item.js"></script>
 	<script src="Classes/itemArray.js"></script>
 	<script src="Classes/Wall.js"></script>

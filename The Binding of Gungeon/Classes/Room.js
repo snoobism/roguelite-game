@@ -3,6 +3,6 @@ function Room(x, y, room){
 	this.mapY = y;
 	this.currentRoom = room.slice(0);
 
-	this.collectibles = [];
+	this.consumables = [];
 	this.items = [];
 }

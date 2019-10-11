@@ -8,7 +8,6 @@ function SlotOne ()
     this.angle=Math.atan(Math.abs(character.y+character.h-mouse.y)/Math.abs(character.x+character.w-mouse.x));
     this.angleRad=this.angle * (Math.PI / 180);
 
-
     this.itemId;
     this.itemImage;
     this.itemImageUrl;

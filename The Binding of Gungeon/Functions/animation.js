@@ -1,8 +1,7 @@
 function animation(){
 if(inMenu == 0)
 {
-    checkEmptyRoom();
-
+        
 
     /*
     screenResizeCheck()
@@ -33,6 +32,12 @@ if(inMenu == 0)
     drawWalls();
 
     /*
+    drawConsumables()
+    Draws consumables in the room
+    */
+    drawConsumables();
+
+    /*
     drawCharacter()
     Checks if Character is alive, then draws it and its weapon
     */
@@ -44,6 +49,7 @@ if(inMenu == 0)
     */
     drawItems();
 
+
     /*
     drawEnemies()
     Draws each existing enemy
@@ -54,7 +60,6 @@ if(inMenu == 0)
     createLockedDoors()
     Create locked doors if there are enemies in the room
     */
-    createLockedDoors();
 
     drawLockedDoors();
 
@@ -82,6 +87,8 @@ if(inMenu == 0)
     updateEnemies();
 
     checkItemIntersection();
+
+    checkConsumableIntersection();
 
     checkBulletImpact();
     

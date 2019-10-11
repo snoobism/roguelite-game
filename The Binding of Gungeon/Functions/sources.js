@@ -20,7 +20,7 @@ char_sprite_still = new Image();
 char_sprite_still.src = "img/char_spritesheet_still.png"; 
 
 char_sprite_move = new Image();
-char_sprite_move.src = "img/char_spritesheet_moving.png";
+char_sprite_move.src = "img/big_boi3.png";
 
 wall_sprite = new Image();
 wall_sprite.src = "img/wall_spritesheet.png"; 
@@ -30,3 +30,12 @@ item_background.src = "img/item_background.png";
 
 sword = new Image();
 sword.src = "img/sword.png";
+
+health_ball = new Image();
+health_ball.src = "img/health_ball.png";
+
+armour = new Image();
+armour.src = "img/armour.png";
+
+bullet_armour = new Image();
+bullet_armour.src = "img/bullet_armour.png";

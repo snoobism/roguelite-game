@@ -94,15 +94,22 @@ function drawCharacter(){
 }
 
 function drawItems(){
-    for(var i = 0; i < itemClassArray.length; i++)
+    for(var i = 0; i < gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items.length; i++)
     {
-        if(itemClassArray[i].mapX == gamestate.mapPosX && itemClassArray[i].mapY == gamestate.mapPosY)
-        {
-            if(itemClassArray[i] != undefined)
+            if(gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items[i] != undefined)
             {
-                itemClassArray[i].draw();
+                gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items[i].draw();
             }
-        }
+    }
+}
+
+function drawConsumables(){
+    for(var i = 0; i < gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables.length; i++)
+    {
+            if(gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables[i] != undefined)
+            {
+                gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables[i].draw();
+            }
     }
 }
 
@@ -324,6 +331,8 @@ function checkEnemyHp(){
             if(enemyArray[i].hp <= 0)
             {
                 enemyArray[i].remove();
+                checkEmptyRoom();
+
             }
         }
 }
@@ -342,7 +351,35 @@ function checkCharacterImpact(){
                 {
                     if(timeout == 0)
                         {
-                            character.currentHp--;
+                            if(character.currentBulletArmour > 0)
+                            {
+                                character.currentBulletArmour--;    
+                                if(slotOne.empty == 0)
+                                {
+                                    slotOne.clipSize--;
+                                    if(slotOne.clipAmmo > slotOne.clipSize)
+                                    {
+                                        slotOne.clipAmmo--;
+                                    }
+                                }
+                                if(slotTwo.empty == 0)
+                                {
+                                    slotTwo.clipSize--;
+                                    if(slotTwo.clipAmmo > slotTwo.clipSize)
+                                    {
+                                        slotTwo.clipAmmo--; 
+                                    }
+                                }
+                            }
+                            else
+                            if(character.currentArmour > 0)
+                            {
+                                character.currentArmour--;
+                            }
+                            else
+                            {
+                                character.currentHp--;
+                            }
                             updateCharacterHpBar();
                             timeout = 1;
                             setTimeout(function(){
@@ -358,13 +395,15 @@ function checkEmptyRoom(){
     if(enemyArray.length == 0)
     {
         gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY] = 1;
+        blockDoor = [];
     }
 }
 
 function checkItemIntersection(){
+    itemClassArray = gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].items; 
     for(var j = 0; j < itemClassArray.length; j++)
     {
-        if(intersection(character.x, character.y, character.w, character.h, itemClassArray[j].x, itemClassArray[j].y, itemClassArray[j].w, itemClassArray[j].h) && itemClassArray[j].mapX == gamestate.mapPosX && itemClassArray[j].mapY == gamestate.mapPosY && itemPickUpTimeout == 0)
+        if(intersection(character.x, character.y, character.w, character.h, itemClassArray[j].x, itemClassArray[j].y, itemClassArray[j].w, itemClassArray[j].h) && itemPickUpTimeout == 0)
             {
                 // pickup item
                 itemPickUpTimeout = 1;
@@ -394,12 +433,22 @@ function checkItemIntersection(){
     }
 }
 
+function checkConsumableIntersection(){
+    consumableClassArray = gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY].consumables; 
+    for(var j = 0; j <consumableClassArray.length; j++)
+    {
+        if(intersection(character.x, character.y, character.w, character.h, consumableClassArray[j].x, consumableClassArray[j].y, consumableClassArray[j].w, consumableClassArray[j].h))
+            {
+                consumableClassArray[j].onPickUp();
+            }
+    }
+}
+
 function updateCharacterHpBar(){
     var i = document.getElementById("health").childElementCount;
-    console.log(character.currentHp);
-    while(i != character.maxHp)
+    while(i != character.maxHp + character.currentArmour + character.currentBulletArmour)
     {
-        if(i < character.maxHp){
+        if(i < character.maxHp + character.currentArmour + character.currentBulletArmour){
             var heart = document.createElement("div");
             heart.id = "heart_cont" + i;
             heart.style.position = "relative";
@@ -408,7 +457,18 @@ function updateCharacterHpBar(){
             heart.style.height = 5 + "vh";
             heart.style.marginLeft = "1vh";
             heart.style.marginTop = "1vh";
-            heart.style.backgroundImage = "url(img/heart_empty.png)"
+            if(i < character.maxHp)
+            {
+                heart.style.backgroundImage = "url(img/heart_empty.png)"
+            }
+            else if(i < character.maxHp + character.currentArmour)
+            {
+                heart.style.backgroundImage = "url(img/armour.png)";
+            }
+            else
+            {
+                heart.style.backgroundImage = "url(img/bullet_armour.png)";
+            }
             heart.style.backgroundSize = "contain";
             heart.style.backgroundRepeat = "no-repeat";
             heart.style.backgroundPosition = "center";
@@ -416,8 +476,8 @@ function updateCharacterHpBar(){
             document.getElementById("health").appendChild(heart);
             i++;
         }
-        else if(i > character.maxHp){
-            document.getElementById("heart_cont" + i).remove();
+        else if(i > character.maxHp + character.currentArmour + character.currentBulletArmour){
+            document.getElementById("heart_cont"+(i -1)).remove();
             i--;
         }
     }
@@ -434,5 +494,13 @@ function updateCharacterHpBar(){
             document.getElementById("heart_cont" + i).style.backgroundImage = "url(img/heart_empty.png)";
         }
 
+    }
+    for(var j = i; j < character.maxHp + character.currentArmour; j++)
+    {
+        document.getElementById("heart_cont" + j).style.backgroundImage = "url(img/armour.png)";
+    }
+    for(var k = j; k < character.maxHp + character.currentArmour + character.currentBulletArmour; k++)
+    {
+        document.getElementById("heart_cont" + k).style.backgroundImage = "url(img/bullet_armour.png)";        
     }
 }

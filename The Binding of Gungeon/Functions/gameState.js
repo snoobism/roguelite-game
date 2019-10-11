@@ -1,7 +1,10 @@
 var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
-c.imageSmoothingEnabled = false;
 
+
+
+// Now this line will be the same size on the page
+// but will look sharper on high-DPI devices!
+var c = canvas.getContext('2d');
 var RESIZE_CANVAS = 0;
 
 var previousCanvasWidth;
@@ -19,6 +22,7 @@ if(window.innerHeight > window.innerWidth)
         previousCanvasWidth = canvas.width;
         previousCanvasHeight = canvas.height;
         t = canvas.width / 13;
+
     }
     else
     {
@@ -27,6 +31,7 @@ if(window.innerHeight > window.innerWidth)
         previousCanvasWidth = canvas.width;
         previousCanvasHeight = canvas.height;
         t = canvas.height / 11;
+
     }
 
 function setCanvasSize(){
@@ -35,6 +40,8 @@ function setCanvasSize(){
 
         canvas.width = window.innerWidth;
         canvas.height = 11/13 * canvas.width;
+        document.getElementById("canvas").style.width = canvas.width + "px";
+        document.getElementById("canvas").style.height = canvas.height + "px";
         RESIZE_CANVAS = 1;
     }
     else
@@ -42,6 +49,8 @@ function setCanvasSize(){
 
         canvas.height = window.innerHeight;
         canvas.width = 13/11 * canvas.height;
+        document.getElementById("canvas").style.width = canvas.width + "px";
+        document.getElementById("canvas").style.height = canvas.height + "px";
         RESIZE_CANVAS = 1;          
     }
     
@@ -336,13 +345,13 @@ function gameState(floor){
         [
                 ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],  //second
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', 'con:2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', 'con:2', 'i', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'con:2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', 'i', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'con:2', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', 'c', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', 'w', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', 'w', 'w']
         ]
@@ -358,7 +367,7 @@ function gameState(floor){
                 ['w', ' ', ' ', ' ', ' ', ' ', 'i', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', 'con:2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
         ]
@@ -374,7 +383,7 @@ function gameState(floor){
                 [' ', ' ', ' ', ' ', ' ', ' ', 'i', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', 'con:2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', 'c', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
         ]
@@ -386,7 +395,7 @@ function gameState(floor){
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
-                ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
+                ['w', ' ', ' ', 'con:2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', 'i', ' ', ' ', ' ', ' ', 'c', ' '],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],
                 ['w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'],

@@ -1,6 +1,6 @@
 function newRoom(w,x,y){
     z1 = 5, z2 = 5, z3 = 11, z4 = 11;  
-    currentRoom = gamestate.mapRoomArray[x][y];
+    currentRoom = gamestate.mapRoomArray[x][y].currentRoom;
     wallArray = [];
     for(var i = 0; i < currentRoom.length; i++)
     {
@@ -43,11 +43,24 @@ function newRoom(w,x,y){
                 if(currentRoom[i][j] == "i")
                     {
                         console.log("new Room pushed an item");
-                        itemClassArray.push(new Item(j * t, i * t, x, y, 2));
-                        gamestate.mapRoomArray[x][y][i][j] = ' ';
+                        gamestate.mapRoomArray[x][y].items.push(new Item(j * t, i * t, x, y, 1));
+                        gamestate.mapRoomArray[x][y].currentRoom[i][j] = ' ';
                     }
+                if(currentRoom[i][j].length > 1)
+                {
+                    if(currentRoom[i][j].substring(0, currentRoom[i][j].indexOf(":")) == 'con')
+                    {
+
+                        var consumableId = currentRoom[i][j].substring(currentRoom[i][j].indexOf(":") + 1, currentRoom[i][j].length)
+                        gamestate.mapRoomArray[x][y].consumables.push(new Consumable(j * t, i * t, parseInt(consumableId)));
+                        gamestate.mapRoomArray[x][y].currentRoom[i][j] = ' ';
+                    }   
+                }
             }
     }
+
+    createLockedDoors();
+
     bulletArray = []; // delete all bullets
     updateMiniMap(gamestate.mapPosX, gamestate.mapPosY);
 
