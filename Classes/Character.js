@@ -6,8 +6,17 @@ function Character(x,y,v,w,h)
     this.x = x;
     this.y = y;
 
-    this.gridRow = 0;
-    this.gridCol = 0;
+    this.colSizeMultiplier = 0.3;
+    this.colMarginMultiplier = 0.35;
+
+    this.colX = this.x + this.w * this.colMarginMultiplier;
+    this.colY = this.y * this.h * this.colMarginMultiplier;
+    this.colW = this.w * this.colSizeMultiplier;
+    this.colH = this.h * this.colSizeMultiplier;
+
+
+    this.gridRow = 5;
+    this.gridCol = 6;
     
     this.currentBulletArmour = 5;
     this.currentArmour = 1;
@@ -47,6 +56,7 @@ function Character(x,y,v,w,h)
     var char_frame_2=0;
     var char_frame_switch_2 = 1;
     this.draw = function () {
+  
         if (keys['w'] == true || keys['s'] == true || keys['a'] == true || keys['d'] == true) {
             c.beginPath();
             c.translate(0.5, 0.5);
@@ -95,6 +105,14 @@ function Character(x,y,v,w,h)
        */
 
 }
+
+this.drawShadow = function(){
+        c.beginPath();
+        c.globalAlpha = 0.5;   
+        c.drawImage(shadow, 0, 0, 32, 19, this.x , this. y + this.h * 0.825, this.w, this.h * 0.25 );
+        c.globalAlpha = 1;  
+}
+
 this.checkCollision = function(key)
         {
 
@@ -118,24 +136,21 @@ this.checkCollision = function(key)
             }
             for(var i = 0; i < wallArray.length; i++)
                 {
-                    if(intersection(this.x + xAdd, this.y + yAdd, this.w, this.h, wallArray[i].x, wallArray[i].y, wallArray[i].w, wallArray[i].h) == true)
+                    if(intersection(this.colX + xAdd, this.colY + yAdd, this.colW, this.colH, wallArray[i].x, wallArray[i].y, wallArray[i].w, wallArray[i].h) == true)
                     {
                         return 1;
                     }
                 }
             for(var i = 0; i < enemyArray.length; i++)
             {
-                for(var k = 0; k < enemyArray[i].bodyParts.length; k++)
+                if(intersection(this.colX + xAdd, this.colY + yAdd, this.colW, this.colH,  enemyArray[i].x + enemyArray[i].w * 0.3, enemyArray[i].y + enemyArray[i].h * 0.35, enemyArray[i].w * 0.3, enemyArray[i].h * 0.3) == true)
                 {
-                    if(intersection(this.x + xAdd, this.y + yAdd, this.w, this.h,  enemyArray[i].bodyParts[k].x + enemyArray[i].bodyParts[k].w * 0.25, enemyArray[i].bodyParts[k].y + enemyArray[i].bodyParts[k].h * 0.25, enemyArray[i].bodyParts[k].w * 0.5, enemyArray[i].bodyParts[k].h * 0.5) == true)
-                    {
-                        return 1;
-                    }
-                }               
+                    return 1;
+                }
             }
             for(var i = 0; i < blockDoor.length; i++)
             {
-                if(intersection(this.x + xAdd, this.y + yAdd, this.w, this.h, blockDoor[i].x, blockDoor[i].y, blockDoor[i].w, blockDoor[i].h) == true)
+                if(intersection(this.colX + xAdd, this.colY + yAdd, this.colW, this.colH, blockDoor[i].x, blockDoor[i].y, blockDoor[i].w, blockDoor[i].h) == true)
                 {
                     return 1;
                 }               
@@ -143,7 +158,7 @@ this.checkCollision = function(key)
 
             for(var i = 0; i < currentRockArray.length; i++)
             {
-                if(intersection(this.x + xAdd, this.y + yAdd, this.w, this.h, currentRockArray[i].x, currentRockArray[i].y, currentRockArray[i].w, currentRockArray[i].h) == true)
+                if(intersection(this.colX + xAdd, this.colY + yAdd, this.colW, this.h * this.colSizeMultiplier*2, currentRockArray[i].x, currentRockArray[i].y, currentRockArray[i].w, currentRockArray[i].h) == true)
                 {
                     return 1;
                 }    
@@ -152,53 +167,19 @@ this.checkCollision = function(key)
         }
     this.update=function(key_pressed){
         
+        this.colX = this.x + this.w * this.colMarginMultiplier;
+        this.colY = this.y + this.h * this.colMarginMultiplier;
+        this.colW = this.w * this.colSizeMultiplier;
+        this.colH = this.h * this.colSizeMultiplier;
+
         this.v = this.v + this.passiveVelocity;
        
-        this.gridRow = Math.trunc(this.y/t);
-        this.gridCol = Math.trunc(this.x/t);
+        this.gridRow = Math.trunc((this.y + this.h/2)/t);w
+        this.gridCol = Math.trunc((this.x + this.w/2)/t);
 
         var xBeforeVelocity = this.x;
         var yBeforeVelocity = this.y;
-        /*
-        switch(key_pressed)
-        {
-            case "d":
-                if ((this.x < previousCanvasWidth -this.w - t -this.v ) && !((this.x > 7 * t -this.v - this.w && this.y > 0 && this.y < t) || (this.x > 7 * t -this.v - this.w && this.y+this.w > 10 * t && this.y < 11 * t))) {
-                    this.x += this.v;
-                } else if (this.y > 5 * t && this.y < 6 * t - this.h  && enemyArray.length==0 && currentRoom[5][12] != 'w') {
-                    this.x += this.v;
-                }
-                break;
-            case "a":
-                if((this.x > t + this.v) && !((this.x < 6 * t +this.v  && this.y > 0 && this.y < t) || (this.x < 6 * t +this.v && this.y+this.w > 10 * t && this.y < 11 * t)))
-                    {
-                        this.x -= this.v;
-                    }else if (this.y > 5*t && this.y <6*t-this.h && enemyArray.length==0 && currentRoom[5][0] != 'w')
-                        {
-                            this.x -= this.v;
-                        }
-                break;
-            case "w":
-                if((this.y > t+this.v)  && !((this.y <= 5 * t +this.v   && this.x > 0 && this.x < t) || (this.y <= 5 * t +this.v && this.x+this.w > 12 * t && this.x-this.w < 13 * t)))
-                    {
-                        this.y -= this.v;
-                    }else if (this.x > 6*t && this.x <7*t-this.w && enemyArray.length==0 && currentRoom[0][6] != 'w')
-                        {
-                            this.y -= this.v;
-                        }
-                break;
-            case "s":
-                if((this.y < previousCanvasHeight-this.h-this.v-t)  && !((this.y > 6 * t -this.v - this.h && this.x > 0 && this.x < t) || (this.y > 6 * t -this.v - this.h && this.x+this.w > 12 * t && this.x < 13 * t)) )
-                    {
-                        this.y += this.v;
-                    }else if (this.x > 6*t && this.x <7*t-this.w && enemyArray.length==0 && currentRoom[10][6] != 'w')
-                        {
-                            this.y += this.v;
-                        }
-                break;
-                
-        }
-        */
+
         var checkIntersectionW = 0;
         var checkIntersectionA = 0;
         var checkIntersectionS = 0;

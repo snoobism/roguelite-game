@@ -8,6 +8,16 @@ function updateBullets(){
         }
 }
 
+function updateEnemyBullets(){
+    for(var i = 0; i < bulletEnemyArray.length; i++)  //make bullet move
+        {
+            if(bulletEnemyArray[i] != undefined)
+            {
+                bulletEnemyArray[i].update();
+            }
+        }
+}
+
 function updateEnemies(){
     for(var i = 0; i < enemyArray.length; i++)  //make enemy move
         {

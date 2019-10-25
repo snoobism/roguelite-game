@@ -1,6 +1,5 @@
 function Bullet(x,y,v,r,mx,my, img, dmg){
-    var adaos_x;
-    var adaos_y;
+    
     this.mx=mx;
     this.my=my;
     this.x=x;
@@ -16,8 +15,9 @@ function Bullet(x,y,v,r,mx,my, img, dmg){
 
     this.id = Date.now() + Math.random();
     
-
-    console.log(this.angleDeg);
+    var adaos_x;
+    var adaos_y;
+    
     if(this.mx>x){
             
         adaos_x= this.v * Math.cos(this.angle); 
@@ -34,8 +34,6 @@ function Bullet(x,y,v,r,mx,my, img, dmg){
         
         adaos_y= -this.v * Math.sin(this.angle);
     }
-
-
 
     var currentRoom = gamestate.mapRoomArray[gamestate.mapPosX][gamestate.mapPosY];
 
