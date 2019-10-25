@@ -31,3 +31,4 @@ Changes:
 0.7
 ~ added pathfinding for melee enemy
 ~ created stationary ranged enemy
+~ restructured folder hierarchy to integrate with github pages more easily
