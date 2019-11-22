@@ -10,6 +10,9 @@ weapon_sprite_2.src = "img/pistol_2.png";
 char_bullet = new Image();
 char_bullet.src = "img/char_bullet.png"; 
 
+enemy_bullet = new Image();
+enemy_bullet.src = "img/enemy_bullet.png"; 
+
 char_bullet_2 = new Image();
 char_bullet_2.src = "img/char_bullet_2.png"; 
 
@@ -42,3 +45,9 @@ bullet_armour.src = "img/bullet_armour.png";
 
 rock_sprite = new Image();
 rock_sprite.src = "img/rock.png"; 
+
+shadow = new Image();
+shadow.src = "img/shadow.png";
+
+ranged = new Image();
+ranged.src = "img/ranged.png";

@@ -23,7 +23,12 @@ Changes:
 ~ added consumable armour
 ~ added consumable bullet armour(+1 max clip size of active items)
 0.6
+~ created Rock Class
 ~ added Boss Room
 ~ created Boss Class
 ~ canvas now resizes based on CSS attribute
 ~ added body parts for enemies (for better collision / hit detection)
+0.7
+~ added pathfinding for melee enemy
+~ created stationary ranged enemy
+~ restructured folder hierarchy to integrate with github pages more easily

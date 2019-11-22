@@ -38,7 +38,7 @@ function newRoom(w,x,y){
                 
                 if(typeof currentRoom[i][j] == 'number' && gamestate.mapRoomVisited[gamestate.mapPosX][gamestate.mapPosY] == 0)
                     {
-                        enemyArray.push(new Enemy(j * t, i * t, currentRoom[i][j]));
+                        enemyArray.push(new Enemy(j * t, i * t, getRandomInt(1, 2) )); //currentRoom[i][j] instead of random int
                     }
                 if(currentRoom[i][j] == "i")
                     {

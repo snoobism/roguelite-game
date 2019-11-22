@@ -188,9 +188,10 @@ function generateMapRooms() {
                 {
                     gamestate.mapRoomArray[i][j] = new Room(i, j, gamestate.bossRooms_down[0]);
                 }
-            }       
+            } 
 
         }
     }
+    //        gamestate.mapRoomArray[5][6] = new Room(5, 6, gamestate.test_room);      
 
 }

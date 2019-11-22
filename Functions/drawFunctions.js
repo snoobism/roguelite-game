@@ -1,3 +1,16 @@
+function drawShadows(){
+    
+    character.drawShadow();
+
+    for(var i = 0; i < enemyArray.length; i++)
+    {
+        if(enemyArray[i] != undefined)
+        {
+            enemyArray[i].drawShadow();
+        }
+    }
+}
+
 function drawCharacterBullets(){
 
     /*
@@ -9,6 +22,21 @@ function drawCharacterBullets(){
         if(bulletArray[i] != undefined)
         {
             bulletArray[i].draw();
+        }
+    }
+}
+
+function drawEnemyBullets(){
+
+    /*
+    bulletArray[] - array to store Character's Bullet objects
+    */
+
+    for(var i = 0; i <= bulletEnemyArray.length - 1; i++)
+    {
+        if(bulletEnemyArray[i] != undefined)
+        {
+            bulletEnemyArray[i].draw();
         }
     }
 }

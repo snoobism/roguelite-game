@@ -6,6 +6,7 @@ var z1=2, z2=2, z3=5, z4=5; // variables used for door animations
 var loc_car_x = 6, loc_car_y = 5;
 var blockDoor = [];
 var wallArray = [];
+var bulletEnemyArray = [];
 var bulletArray = [];
 var enemyArray = [];
 var itemClassArray = [];

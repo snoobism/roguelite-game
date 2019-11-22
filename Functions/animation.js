@@ -24,7 +24,7 @@ if(inMenu == 0)
     Draws each existing bullet
     */
     drawCharacterBullets();
-    
+    drawShadows();
     /*
     drawWalls()
     Draws each existing wall
@@ -63,6 +63,7 @@ if(inMenu == 0)
     */
 
     drawBosses();
+    drawEnemyBullets();
 
     drawLockedDoors();
 
@@ -84,6 +85,7 @@ if(inMenu == 0)
     }
     
 
+    updateEnemyBullets();
 
     updateBullets();
 
